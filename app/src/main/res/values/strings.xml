@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Shannon Modem Tweaks</string>
+    <string name="non_pixel_damage_warning">If you\'re not using a Pixel device, you shouldn\'t attempt to use this app. It could damage your device.</string>
+    <string name="reports_possible_pixel_device">Your device appears to be reporting as a %1$s, but other factors make us unsure.</string>
+    <string name="reports_pixel_device">We think you\'re rocking a <b>%1$s</b>.</string>
+    <string name="reports_unknown_device">You\'re not using a Pixel device (or you\'re using an unknown model).</string>
+    <string name="unknown_device_report">If you\'re sure it is, please report this as a bug.</string>
+    <string name="reports_not_a_pixel">This doesn\'t seem like a Google Pixel device.</string>
+    <string name="root_access_success">Super! We\'ve confirmed root access on your device.</string>
+    <string name="root_access_fail">Uh oh! We couldn\'t confirm root access on your device, or you denied the superuser confirmation dialog.</string>
+    <string name="root_access_request">To modify modem features, we need root access to your device.</string>
+    <string name="root_access_request_cta">Check for root access</string>
+    <string name="nav_info">Info</string>
+    <string name="nav_tweaks">Tweaks</string>
+</resources>
