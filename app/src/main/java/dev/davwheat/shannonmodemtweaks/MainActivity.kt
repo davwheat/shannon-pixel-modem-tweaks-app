@@ -45,9 +45,9 @@ class MainActivity : ComponentActivity() {
 }
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
-  object Info : Screen("info", R.string.nav_info, Icons.Rounded.Info)
+  data object Info : Screen("info", R.string.nav_info, Icons.Rounded.Info)
 
-  object Tweaks : Screen("tweaks", R.string.nav_tweaks, Icons.Rounded.Settings)
+  data object Tweaks : Screen("tweaks", R.string.nav_tweaks, Icons.Rounded.Settings)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
