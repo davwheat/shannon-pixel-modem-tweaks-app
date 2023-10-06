@@ -1,10 +1,10 @@
 package dev.davwheat.shannonmodemtweaks.utils
 
+import timber.log.Timber
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
-import timber.log.Timber
 
 object ExecuteAsRoot {
   fun hasRoot(): Boolean {
