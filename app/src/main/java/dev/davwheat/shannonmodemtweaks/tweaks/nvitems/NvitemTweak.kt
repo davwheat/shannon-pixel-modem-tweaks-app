@@ -9,6 +9,7 @@ abstract class NvitemTweak : Tweak() {
   override val type = TweakType.NVITEM
 
   abstract val nvitem: String
+  @Suppress("MemberVisibilityCanBePrivate")
   protected val nvitemIndex: Int = 0
   abstract val nvitemValue: String
 
