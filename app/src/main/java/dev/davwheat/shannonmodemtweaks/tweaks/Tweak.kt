@@ -5,7 +5,7 @@ abstract class Tweak {
   abstract val name: String
   abstract val description: String
 
-  abstract fun applyTweak(): Boolean
+  abstract fun applyTweak(): Pair<Boolean, String>
 }
 
 enum class TweakType {

@@ -12,7 +12,7 @@ abstract class NvitemTweak : Tweak() {
   @Suppress("MemberVisibilityCanBePrivate") protected val nvitemIndex: Int = 0
   abstract val nvitemValue: String
 
-  override fun applyTweak(): Boolean = applyNvitemChange()
+  override fun applyTweak(): Pair<Boolean, String> = applyNvitemChange()
 
   private fun buildAtCommand(): String {
     if (nvitem.contains(regex = Regex("""[\\"]"""))) {
@@ -29,15 +29,16 @@ abstract class NvitemTweak : Tweak() {
     return "echo '${buildAtCommand()}' > /dev/umts_router & cat /dev/umts_router"
   }
 
-  private fun applyNvitemChange(): Boolean {
+  private fun applyNvitemChange(): Pair<Boolean, String> {
     val cmd = buildShellCommand()
 
     Timber.d("Executing command: $cmd")
-    val result = ExecuteAsRoot.executeAsRoot(listOf(cmd)) ?: return false
+    val result =
+        ExecuteAsRoot.executeAsRoot(listOf(cmd)) ?: return Pair(false, "Failed to execute command")
 
-    val (_, output) = result[0] ?: return false
+    val (_, output) = result[0] ?: return Pair(false, "**No output**")
     Timber.d("Result: $output")
 
-    return output.lowercase().contains("ok")
+    return Pair(output.lowercase().contains("ok"), output)
   }
 }

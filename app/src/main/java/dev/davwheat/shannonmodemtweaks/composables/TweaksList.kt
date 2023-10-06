@@ -1,19 +1,30 @@
 package dev.davwheat.shannonmodemtweaks.composables
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,9 +44,14 @@ import dev.davwheat.shannonmodemtweaks.utils.InferDevice
 @Composable
 fun TweaksList() {
   val listState = rememberLazyListState()
+  var outputText by rememberSaveable { mutableStateOf("Run a tweak to see its output here.\n\n") }
   val allowTweaks = InferDevice.shouldAllowTweaks()
 
+  Column(
+      modifier = Modifier.fillMaxSize(),
+  ) {
     LazyColumn(
+        modifier = Modifier.fillMaxSize().padding(top = 16.dp).weight(66f),
         state = listState,
         content = {
           if (!allowTweaks) {
@@ -81,8 +97,30 @@ fun TweaksList() {
             }
           }
         },
-      modifier = Modifier.padding(top = 16.dp),
-  )
+    )
+
+    Box(
+        modifier =
+            Modifier.weight(34f)
+                .background(Color.Black)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .horizontalScroll(rememberScrollState())) {
+          SelectionContainer {
+            Text(
+                text = outputText,
+                modifier = Modifier.padding(8.dp),
+                color = Color.White,
+                style =
+                    TextStyle(
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                    ),
+            )
+          }
+        }
+  }
 }
 
 @Composable
@@ -98,24 +136,39 @@ fun TweaksCategoryHeader(modifier: Modifier = Modifier, category: String) {
 }
 
 @Composable
-fun TweaksListItem(modifier: Modifier = Modifier, tweak: Tweak) {
-  Surface(modifier = Modifier.clickable { tweak.applyTweak() }) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.padding(vertical = 12.dp, horizontal = 16.dp),
-    ) {
-      Column(
-          modifier = Modifier.weight(1f).padding(end = 16.dp),
-      ) {
-        Text(
-            text = tweak.name,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp),
-        )
-        Text(text = tweak.description, style = MaterialTheme.typography.bodyMedium)
+fun TweaksListItem(
+    modifier: Modifier = Modifier,
+    tweak: Tweak,
+    enabled: Boolean,
+    onOutput: (String) -> Unit
+) {
+  Surface(
+      modifier =
+          Modifier.clickable {
+            if (enabled) {
+              val (success, output) = tweak.applyTweak()
+
+              onOutput(
+                  "${if (success) "Success" else "Failure"} - ${tweak.name}:\n\n${output}\n${"-".repeat(32)}",
+              )
+            }
+          }) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+        ) {
+          Column(
+              modifier = Modifier.weight(1f).padding(end = 16.dp),
+          ) {
+            Text(
+                text = tweak.name,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+            Text(text = tweak.description, style = MaterialTheme.typography.bodyMedium)
+          }
+        }
       }
-    }
-  }
 }
 
 @Composable
