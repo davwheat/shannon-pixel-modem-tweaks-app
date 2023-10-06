@@ -46,6 +46,12 @@ object InferDevice {
     return Pair(device, certainty)
   }
 
+  fun shouldAllowTweaks(): Boolean {
+    val (_, certainty) = getDevice()
+
+    return certainty == HeuristicsCertainty.VERY_LIKELY
+  }
+
   enum class PixelDevice(val codename: String?, val humanName: String) {
     UNKNOWN(null, "Unknown"),
     PIXEL_6("oriole", "Google Pixel 6"),
