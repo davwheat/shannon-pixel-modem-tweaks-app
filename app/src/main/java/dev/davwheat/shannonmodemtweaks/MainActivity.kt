@@ -64,7 +64,11 @@ fun MainActivityContent() {
         topBar = {
           TopAppBar(
               title = {
-                Text("Shannon Modem Tweaks", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    stringResource(R.string.app_name),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
               },
               scrollBehavior = scrollBehavior,
               colors =
