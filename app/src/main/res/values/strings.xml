@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Shannon Modem Tweaks</string>
+    <string name="app_name_short">Shannon Tweaks</string>
     <string name="non_pixel_damage_warning">If you\'re not using a Pixel device, you shouldn\'t attempt to use this app. It could damage your device.</string>
     <string name="reports_possible_pixel_device">Your device appears to be reporting as a %1$s, but other factors make us unsure.</string>
     <string name="reports_pixel_device">We think you\'re rocking a <b>%1$s</b>.</string>
