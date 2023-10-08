@@ -58,6 +58,8 @@ fun TweaksList() {
         modifier = Modifier.fillMaxSize().padding(top = 16.dp).weight(66f),
         state = listState,
         content = {
+          item { IsNsgRunningCheck(modifier=Modifier.padding(horizontal = 16.dp)) }
+
           if (!allowTweaks) {
             item {
               Surface(

@@ -17,4 +17,6 @@
     <string name="tweaks_disabled_main">We can\'t be certain that your device is a Google Pixel with a Shannon modem.</string>
     <string name="tweaks_disabled_supporting_1">These tweaks and settings will only work on a Google Pixel with a Shannon modem.</string>
     <string name="tweaks_disabled_supporting_2">Until we can determine your device is compatible, you cannot apply any tweaks.</string>
+    <string name="nsg_running_warning">Looks like Network Signal Guru is currently running. You\'ll need to close it before applying tweaks.</string>
+    <string name="nsg_check_refresh">Check again</string>
 </resources>
