@@ -1,8 +1,13 @@
 package dev.davwheat.shannonmodemtweaks.utils
 
+import androidx.annotation.IntRange
 import java.util.Locale
 
-fun Int.toNvItemHexString(byteCount: Int): String {
+fun Int.toNvItemHexString(@IntRange(0, 4) byteCount : Int): String {
+  if (byteCount < 0 || byteCount > 4) {
+    throw IllegalArgumentException("byteCount must be between 0 and 4 inclusive")
+  }
+
   // Break into bytes from small to large
   val bytes = toByteArray()
 
