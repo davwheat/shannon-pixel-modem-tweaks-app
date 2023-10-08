@@ -1,7 +1,5 @@
-package dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa
+package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
-import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItem
-import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
 import dev.davwheat.shannonmodemtweaks.utils.toNvItemHexString
 
 class AdditionalNrSaLocking : NvItemTweak() {
