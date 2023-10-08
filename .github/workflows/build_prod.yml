@@ -54,4 +54,4 @@ jobs:
         with:
           name: Release APK
           if-no-files-found: error
-          path: ./app/build/outputs/apk/Release/*.apk
+          path: ./app/build/outputs/apk/release/*.apk
