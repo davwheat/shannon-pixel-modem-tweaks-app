@@ -69,10 +69,15 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
       isDebuggable = false
+
+      manifestPlaceholders["sentryEnvironment"] = "production"
     }
-    getByName("debug") {
+
+    debug {
       signingConfig = signingConfigs.getByName("debug")
       isDebuggable = true
+
+      manifestPlaceholders["sentryEnvironment"] = "development"
     }
   }
 
