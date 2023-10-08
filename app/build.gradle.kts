@@ -92,6 +92,14 @@ android {
   packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
+tasks.withType(Test::class) {
+  useJUnitPlatform()
+
+  testLogging {
+    events("passed", "skipped", "failed")
+  }
+}
+
 dependencies {
   implementation(libs.core.ktx)
   implementation(libs.lifecycle.runtime.ktx)
@@ -105,6 +113,7 @@ dependencies {
   implementation(libs.androidx.material.icons.extended)
   implementation(libs.androidx.navigation.compose)
   testImplementation(libs.junit)
+  testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.espresso.core)
   androidTestImplementation(platform(libs.compose.bom))
