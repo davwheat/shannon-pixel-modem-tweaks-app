@@ -21,8 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,6 +43,9 @@ import dev.davwheat.shannonmodemtweaks.tweaks.AllTweaks
 import dev.davwheat.shannonmodemtweaks.tweaks.Tweak
 import dev.davwheat.shannonmodemtweaks.ui.theme.ShannonModemTweaksTheme
 import dev.davwheat.shannonmodemtweaks.utils.InferDevice
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -51,6 +56,22 @@ fun TweaksList() {
   var outputText by rememberSaveable { mutableStateOf(defaultTerminalText) }
   val allowTweaks = InferDevice.shouldAllowTweaks()
 
+  val outputVerticalScrollState = rememberScrollState()
+  val outputHorizontalScrollState = rememberScrollState()
+
+  val scope = rememberCoroutineScope()
+
+  fun appendToOutput(text: String) {
+    scope.launch { outputText = outputText + text + "\n" }
+  }
+
+  LaunchedEffect(outputText) {
+    withContext(Dispatchers.Main) {
+      outputVerticalScrollState.animateScrollTo(outputVerticalScrollState.maxValue)
+      outputHorizontalScrollState.animateScrollTo(0)
+    }
+  }
+
   Column(
       modifier = Modifier.fillMaxSize(),
   ) {
@@ -58,7 +79,7 @@ fun TweaksList() {
         modifier = Modifier.fillMaxSize().padding(top = 16.dp).weight(66f),
         state = listState,
         content = {
-          item { IsNsgRunningCheck(modifier=Modifier.padding(horizontal = 16.dp)) }
+          item { IsNsgRunningCheck(modifier = Modifier.padding(horizontal = 16.dp)) }
 
           if (!allowTweaks) {
             item {
@@ -98,7 +119,7 @@ fun TweaksList() {
               TweaksListItem(
                   tweak = it,
                   enabled = allowTweaks,
-                  onOutput = { outputText = outputText + it + "\n" },
+                  onOutput = ::appendToOutput,
               )
             }
           }
@@ -110,22 +131,23 @@ fun TweaksList() {
             Modifier.weight(34f)
                 .background(Color.Black)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .horizontalScroll(rememberScrollState())) {
-          SelectionContainer {
-            Text(
-                text = outputText,
-                modifier = Modifier.padding(8.dp),
-                color = Color.White,
-                style =
-                    TextStyle(
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                    ),
-            )
-          }
-        }
+                .verticalScroll(outputVerticalScrollState)
+                .horizontalScroll(outputHorizontalScrollState),
+    ) {
+      SelectionContainer {
+        Text(
+            text = outputText,
+            modifier = Modifier.padding(8.dp),
+            color = Color.White,
+            style =
+                TextStyle(
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                ),
+        )
+      }
+    }
   }
 }
 
