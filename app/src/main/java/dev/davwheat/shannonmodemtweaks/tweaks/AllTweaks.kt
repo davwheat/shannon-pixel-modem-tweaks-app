@@ -1,5 +1,6 @@
 package dev.davwheat.shannonmodemtweaks.tweaks
 
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.AdditionalNrSaLocking
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.LteRrcLoggedMeas
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrConfigMode
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
@@ -14,6 +15,7 @@ val AllTweaks: Map<String, List<Tweak>> =
                 LteRrcLoggedMeas(),
                 NrConfigMode(),
                 PhyUeSpecificRefSigSupport(),
+                AdditionalNrSaLocking(),
             ).sortedBy { it.name },
         ),
     )
