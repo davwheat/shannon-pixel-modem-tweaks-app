@@ -123,7 +123,10 @@ fun CheckRootAccess(
           ) {
             Row {
               if (loadingRootCheck) {
-                CircularProgressIndicator(modifier = Modifier.size(ButtonDefaults.IconSize))
+                CircularProgressIndicator(
+                  modifier = Modifier.size(ButtonDefaults.IconSize),
+                  strokeWidth = 2.dp,
+                )
               } else {
                 Icon(
                     Icons.Rounded.Security,
