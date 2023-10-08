@@ -11,6 +11,7 @@ permissions:
 jobs:
   publish:
     name: Build and upload APK
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
