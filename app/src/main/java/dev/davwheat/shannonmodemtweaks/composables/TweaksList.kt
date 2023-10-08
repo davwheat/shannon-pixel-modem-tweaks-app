@@ -29,12 +29,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.davwheat.shannonmodemtweaks.R
 import dev.davwheat.shannonmodemtweaks.tweaks.AllTweaks
 import dev.davwheat.shannonmodemtweaks.tweaks.Tweak
 import dev.davwheat.shannonmodemtweaks.ui.theme.ShannonModemTweaksTheme
@@ -43,8 +45,10 @@ import dev.davwheat.shannonmodemtweaks.utils.InferDevice
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TweaksList() {
+  val defaultTerminalText = stringResource(R.string.default_terminal_output)
+
   val listState = rememberLazyListState()
-  var outputText by rememberSaveable { mutableStateOf("Run a tweak to see its output here.\n\n") }
+  var outputText by rememberSaveable { mutableStateOf(defaultTerminalText) }
   val allowTweaks = InferDevice.shouldAllowTweaks()
 
   Column(
@@ -66,17 +70,17 @@ fun TweaksList() {
                     modifier = Modifier.padding(16.dp),
                 ) {
                   Text(
-                      "We can't be certain that your device is a Google Pixel with a Shannon modem.",
+                      stringResource(R.string.tweaks_disabled_main),
                       textAlign = TextAlign.Center,
                       fontWeight = FontWeight.Bold,
                   )
                   Text(
-                      "These tweaks and settings will only work on a Google Pixel with a Shannon modem.",
+                      stringResource(R.string.tweaks_disabled_supporting_1),
                       textAlign = TextAlign.Center,
                       style = MaterialTheme.typography.bodyMedium,
                   )
                   Text(
-                      "Until we can determine your device is compatible, you cannot apply any tweaks.",
+                      stringResource(R.string.tweaks_disabled_supporting_2),
                       textAlign = TextAlign.Center,
                       style = MaterialTheme.typography.bodyMedium,
                   )
