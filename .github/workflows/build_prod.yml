@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-gradle-cache-
 
       - name: Put keystore in place on filesystem to allow for signing builds
-        run: echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > /tmp/keystore
+        run: echo "${{ secrets.KEYSTORE_FILE }}" | openssl base64 -d -out /tmp/keystore
 
       - name: Set up local.properties
         run: |
