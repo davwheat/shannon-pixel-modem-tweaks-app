@@ -23,6 +23,7 @@ First, we need to create a new class that extends the `NvItemTweak` class. This 
 ```kt
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
+// Import our superclass
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
 
 class NrConfigMode : NvItemTweak() {
@@ -77,6 +78,7 @@ Additionally, if you need to quicky and easily convert to the little-endian byte
 ```kt
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
+// Import the NvItem class
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItem
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
 
