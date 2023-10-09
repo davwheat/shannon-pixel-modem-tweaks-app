@@ -106,7 +106,7 @@ This is used in the [`AdditionalNrSaLocking`](./app/sec/main/java/dev/davwheat/s
 
 ```kt
 1.toNvItemHexString(3)        // "01,00,00"
-78.toNvItemHexString(2)       // "4E,FF"
+78.toNvItemHexString(2)       // "4E,00"
 0xFF0F.toNvItemHexString(2)   // "0F,FF"
 0xFFFFFF.toNvItemHexString(2) // "FF,FF"
 ```
