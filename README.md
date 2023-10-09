@@ -10,6 +10,18 @@ This is a Jetpack Compose Android app written in Kotlin to provide a user-friend
 >
 > This may also invalidate your device's warranty.
 
+## Download
+
+You can download the latest stable version from [GitHub's releases tab](https://github.com/davwheat/shannon-pixel-modem-tweaks-app/releases).
+
+On-demand builds are also available from any successful [GitHub Actions CI run](https://github.com/davwheat/shannon-pixel-modem-tweaks-app/actions). These are not recommended unless you are experienced with Shannon nvitem modding.
+
+## Contributing and adding tweaks
+
+Please see the [contributing guide](CONTRIBUTING.md).
+
 ## Tweaks
 
 This app allows the application of nvitem tweaks from my [Shannon nvitem enabler scripts repository](https://github.com/davwheat/shannon-pixel-modem-nvitem-enabler-scripts).
+
+A huge thanks goes to Lightspeed and Amelié for their work on Shannon modem tinkering, including discovering nvitem modding, confseqs and more.
