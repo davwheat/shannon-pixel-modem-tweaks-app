@@ -7,20 +7,16 @@ import timber.log.Timber
 
 class NvItem(val id: String, val value: String, val index: Int = 0) {
   init {
-    require (!id.contains(regex = Regex("""[\\"]"""))) {
+    require(!id.contains(regex = Regex("""[\\"]"""))) {
       "nvitem cannot contain backslashes or quotes"
     }
-    require (index >= 0) {
-      "nvitemIndex must be greater than or equal to 0"
-    }
-    require (!value.contains(regex = Regex("""[\\"]"""))) {
+    require(index >= 0) { "nvitemIndex must be greater than or equal to 0" }
+    require(!value.contains(regex = Regex("""[\\"]"""))) {
       "nvitemValue cannot contain backslashes or quotes"
     }
   }
 
-  /**
-   * Returns the AT command to apply this nvitem change.
-   */
+  /** Returns the AT command to apply this nvitem change. */
   override fun toString(): String {
     return "AT+GOOGSETNV=\"$id\",$index,\"$value\"\\r"
   }

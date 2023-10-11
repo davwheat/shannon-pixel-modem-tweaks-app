@@ -26,7 +26,6 @@ fun MainScreen() {
       verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     DeviceInfo(device = device, certainty = certainty)
-
     CheckRootAccess(rootCheckState = rootCheckState) { rootCheckState = it }
   }
 }

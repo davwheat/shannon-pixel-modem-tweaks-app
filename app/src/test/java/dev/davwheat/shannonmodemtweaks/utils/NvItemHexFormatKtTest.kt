@@ -1,9 +1,8 @@
 package dev.davwheat.shannonmodemtweaks.utils
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.lang.IllegalArgumentException
+import org.junit.jupiter.api.assertThrows
 
 class NvItemHexFormatKtTest {
 
@@ -22,12 +21,8 @@ class NvItemHexFormatKtTest {
     assertEquals("00,FF", 0xFF00.toNvItemHexString(2))
     assertEquals("00,00", 0xFF0000.toNvItemHexString(2))
 
-    assertThrows<IllegalArgumentException> {
-      0x0.toNvItemHexString(-1)
-    }
+    assertThrows<IllegalArgumentException> { 0x0.toNvItemHexString(-1) }
 
-    assertThrows<IllegalArgumentException> {
-      0x0.toNvItemHexString(5)
-    }
+    assertThrows<IllegalArgumentException> { 0x0.toNvItemHexString(5) }
   }
 }

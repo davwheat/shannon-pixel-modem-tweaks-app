@@ -9,7 +9,8 @@ class PhyUeTxAntennaSelectionSupport : NvItemTweak() {
       "Select between antenna ports 0 and 1 when it supports multiple Tx antennas"
 
   override val nvItems: List<NvItem>
-    get() = listOf(
-      NvItem(id="UECAPA_PHY_UE_TX_ANTENNASEL_SUPPORT", value="01"),
-    )
+    get() =
+        listOf(
+            NvItem(id = "UECAPA_PHY_UE_TX_ANTENNASEL_SUPPORT", value = "01"),
+        )
 }

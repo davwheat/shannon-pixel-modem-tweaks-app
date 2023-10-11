@@ -95,9 +95,7 @@ android {
 tasks.withType(Test::class) {
   useJUnitPlatform()
 
-  testLogging {
-    events("passed", "skipped", "failed")
-  }
+  testLogging { events("passed", "skipped", "failed") }
 }
 
 dependencies {

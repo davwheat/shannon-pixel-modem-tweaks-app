@@ -9,7 +9,8 @@ class PhyUeSpecificRefSigSupport : NvItemTweak() {
       "Allows UE to interpret specific reference signals in TM7-9 for DL beamforming"
 
   override val nvItems: List<NvItem>
-    get() = listOf(
-      NvItem(id="UECAPA_PHY_UE_SPECIFIC_REF_SIG_SUPPORT", value="01"),
-    )
+    get() =
+        listOf(
+            NvItem(id = "UECAPA_PHY_UE_SPECIFIC_REF_SIG_SUPPORT", value = "01"),
+        )
 }
