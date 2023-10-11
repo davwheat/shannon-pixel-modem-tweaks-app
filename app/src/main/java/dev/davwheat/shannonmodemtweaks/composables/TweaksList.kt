@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -76,15 +77,17 @@ fun TweaksList() {
       modifier = Modifier.fillMaxSize(),
   ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(top = 16.dp).weight(66f),
+        modifier = Modifier.fillMaxSize().weight(66f),
         state = listState,
         content = {
-          item { IsNsgRunningCheck(modifier = Modifier.padding(horizontal = 16.dp)) }
+          item {
+            IsNsgRunningCheck(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp))
+          }
 
           if (!allowTweaks) {
             item {
               Surface(
-                  modifier = Modifier.padding(16.dp).clip(RoundedCornerShape(8.dp)),
+                  modifier = Modifier.padding(horizontal = 16.dp).clip(RoundedCornerShape(8.dp)),
                   tonalElevation = 2.dp,
                   shadowElevation = 2.dp,
               ) {
@@ -153,14 +156,16 @@ fun TweaksList() {
 
 @Composable
 fun TweaksCategoryHeader(modifier: Modifier = Modifier, category: String) {
-  Row(
-      modifier =
-          modifier.padding(
-              horizontal = 12.dp,
-              vertical = 8.dp,
-          )) {
-        Text(text = category, style = MaterialTheme.typography.titleMedium)
-      }
+  Surface(modifier = modifier.fillMaxWidth().padding(top = 12.dp)) {
+    Row(
+        modifier =
+            Modifier.padding(
+                horizontal = 12.dp,
+                vertical = 8.dp,
+            )) {
+          Text(text = category, style = MaterialTheme.typography.titleMedium)
+        }
+  }
 }
 
 @Composable
