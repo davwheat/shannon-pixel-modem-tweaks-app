@@ -1,7 +1,7 @@
 package dev.davwheat.shannonmodemtweaks.tweaks
 
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.AdditionalNrSaLocking
-import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.HpuePC15
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrCommHpUePc1Dot5SupportedBands
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.LteRrcLoggedMeas
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrConfigMode
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
@@ -17,7 +17,7 @@ val AllTweaks: Map<String, List<Tweak>> =
                 NrConfigMode(),
                 PhyUeSpecificRefSigSupport(),
                 AdditionalNrSaLocking(),
-                HpuePC15(),
+                NrCommHpUePc1Dot5SupportedBands(),
             ).sortedBy { it.name },
         ),
     )

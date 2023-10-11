@@ -2,9 +2,9 @@ package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
 import dev.davwheat.shannonmodemtweaks.utils.toNvItemHexString
 
-class HpuePC15 : NvItemTweak() {
-  override val name = "Enable HPUE PC 1.5"
-  override val description = "Enables HPUE Power Class 1.5 for supported bands"
+class NrCommHpUePc1Dot5SupportedBands : NvItemTweak() {
+  override val name = "Enable HPUE PC1.5"
+  override val description = "Enables HPUE power class 1.5 for n41/77"
 
   private val bands = listOf(41, 77)
 
