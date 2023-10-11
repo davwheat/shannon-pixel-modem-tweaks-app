@@ -24,7 +24,7 @@ class NrCommHpUePc1Dot5SupportedBands : NvItemTweak() {
             // Bands count
             NvItem(
                 id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS_NUM",
-                value = bands.size.toNvItemHexString(2),
+                value = bands.size.toNvItemHexString(1),
             ),
         )
 }
