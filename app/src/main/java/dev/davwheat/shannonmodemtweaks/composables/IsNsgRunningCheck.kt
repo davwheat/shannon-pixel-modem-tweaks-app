@@ -57,7 +57,7 @@ fun IsNsgRunningCheck(
     }
   }
 
-  LaunchedEffect(true) { refreshNsgStatus() }
+  LaunchedEffect(true) { if (isNsgRunning == null) refreshNsgStatus() }
 
   AnimatedContent(targetState = isNsgRunning, label = "NSG running check content") {
     if (it == true) {
