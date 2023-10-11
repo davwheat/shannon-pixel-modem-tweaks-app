@@ -27,5 +27,6 @@ fun MainScreen() {
   ) {
     DeviceInfo(device = device, certainty = certainty)
     CheckRootAccess(rootCheckState = rootCheckState) { rootCheckState = it }
+    ResetNvItems()
   }
 }

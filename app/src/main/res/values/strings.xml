@@ -19,4 +19,20 @@
     <string name="tweaks_disabled_supporting_2">Until we can determine your device is compatible, you cannot apply any tweaks.</string>
     <string name="nsg_running_warning">Looks like Network Signal Guru is currently running. You\'ll need to close it before applying tweaks.</string>
     <string name="nsg_check_refresh">Check again</string>
+    <string name="reset_nvitems_lead">Having issues after applying tweaks?</string>
+    <string name="reset_nvitems_description">Resetting nvitems will remove any tweaks you have applied. You won\'t lose any eSIMs, network or software settings.</string>
+    <string name="reset_nvitems_cta">Reset nvitems</string>
+    <string name="reset_nvitems_dialog_confirm_cta">Reset</string>
+    <string name="reset_nvitems_dialog_dismiss_cta">Cancel</string>
+    <string name="reset_nvitems_dialog_title">Reset nvitems</string>
+    <string name="reset_nvitems_dialog_lead">Are you sure you want to reset your nvitems to defaults?</string>
+    <string name="reset_nvitems_dialog_description">Your device will automatically reboot during this process.</string>
+    <string name="reset_nvitems_resetting_dialog_title">Resetting nvitems</string>
+    <string name="reset_nvitems_resetting_dialog_lead">This might take a few minutes</string>
+    <string name="reset_nvitems_resetting_dialog_description">Your device will automatically reboot during this process</string>
+    <string name="reset_nvitems_failed_dialog_confirm_cta">OK</string>
+    <string name="reset_nvitems_failed_dialog_title">Error</string>
+    <string name="reset_nvitems_failed_dialog_lead">We failed to reset your modem\'s nvitems.</string>
+    <string name="reset_nvitems_failed_dialog_no_root">You don\'t have root access or haven\'t allowed it for this app.</string>
+    <string name="reset_nvitems_failed_dialog_execution_error">An execution error occurred while attempting to rename your nvitems database.</string>
 </resources>
