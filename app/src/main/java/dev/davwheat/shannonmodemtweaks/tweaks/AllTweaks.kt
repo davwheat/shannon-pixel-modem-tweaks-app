@@ -8,6 +8,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSuppo
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeTxAntennaSelectionSupport
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.Qam256UploadSupport
 
 val AllTweaks: Map<String, List<Tweak>> =
     mapOf(
@@ -21,7 +22,14 @@ val AllTweaks: Map<String, List<Tweak>> =
                     AdditionalNrSaLocking(),
                     SrsTxSwitch(),
                     NrCommHpUePc1Dot5SupportedBands(),
+                    Qam256UploadSupport(),
                 )
                 .sortedBy { it.name },
         ),
-        Pair("IMS", listOf(EvsSwbHighBitrateSupport()).sortedBy { it.name }))
+        Pair(
+            "IMS",
+            listOf(
+                    EvsSwbHighBitrateSupport(),
+                )
+                .sortedBy { it.name },
+        ),
