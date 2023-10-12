@@ -1,9 +1,9 @@
-package dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa
+package dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.rel14
 
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItem
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
 
-class Rel14Tbs33bSupport : NvItemTweak() {
+class Tbs33bSupport : NvItemTweak() {
   override val name = "TBS 33B support for 256QAM LTE"
   override val description = "Enable TBS index 33B for 256QAM for ~3% DL performance uplift"
 
