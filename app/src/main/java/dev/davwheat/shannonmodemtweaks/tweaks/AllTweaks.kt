@@ -6,9 +6,11 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrCommHpUePc1Dot5Supported
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrConfigMode
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrCsiRsTrsFull50OnAllCcs
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeTxAntennaSelectionSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.Qam256UploadSupport
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.Rel14Tbs33bSupport
 
 val AllTweaks: Map<String, List<Tweak>> =
     mapOf(
@@ -40,3 +42,11 @@ val AllTweaks: Map<String, List<Tweak>> =
                 )
                 .sortedBy { it.name },
         ),
+        Pair(
+            "NR only",
+            listOf(
+                    NrCsiRsTrsFull50OnAllCcs(),
+                )
+                .sortedBy { it.name },
+        ),
+    )
