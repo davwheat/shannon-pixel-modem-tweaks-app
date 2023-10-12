@@ -2,6 +2,7 @@ package dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa
 
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItem
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
+import dev.davwheat.shannonmodemtweaks.utils.toNvItemHexString
 
 class NrCsiRsTrsFull50OnAllCcs : NvItemTweak() {
   override val name = "NR CSI-RS increase max TRS to 50"
@@ -12,7 +13,7 @@ class NrCsiRsTrsFull50OnAllCcs : NvItemTweak() {
       listOf(
           NvItem(
               id = "UECAPA_NR_RF_BAND_FR1_MIMO_CSIRS_TRACK_MAX_CONFIG_RSETS_ALLCC",
-              value = "01",
+              value = 50.toNvItemHexString(2),
           ),
       )
 }
