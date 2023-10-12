@@ -33,3 +33,10 @@ val AllTweaks: Map<String, List<Tweak>> =
                 )
                 .sortedBy { it.name },
         ),
+        Pair(
+            "Release 14",
+            listOf(
+                    Rel14Tbs33bSupport(),
+                )
+                .sortedBy { it.name },
+        ),
