@@ -1,11 +1,14 @@
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
+import android.os.Parcelable
 import dev.davwheat.shannonmodemtweaks.tweaks.Tweak
 import dev.davwheat.shannonmodemtweaks.tweaks.TweakType
 import dev.davwheat.shannonmodemtweaks.utils.ExecuteAsRoot
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
-class NvItem(val id: String, val value: String, val index: Int = 0) {
+@Parcelize
+class NvItem(val id: String, val value: String, val index: Int = 0): Parcelable {
   init {
     require(!id.contains(regex = Regex("""[\\"]"""))) {
       "nvitem cannot contain backslashes or quotes"

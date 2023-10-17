@@ -1,7 +1,14 @@
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
-class LteRrcLoggedMeas : NvItemTweak() {
+import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+class LteRrcLoggedMeas: NvItemTweak(), Parcelable {
+  @IgnoredOnParcel
   override val name = "UE signal measurement logging and reporting"
+  @IgnoredOnParcel
   override val description =
       "Allows the device to perform network-controlled cell signal measurements for analytics."
 

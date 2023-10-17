@@ -24,6 +24,7 @@ plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.kotlinAndroid)
   id("io.sentry.android.gradle") version "3.13.0"
+  id("kotlin-parcelize")
 }
 
 sentry {

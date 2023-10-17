@@ -1,10 +1,16 @@
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.rel14
 
+import android.os.Parcelable
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItem
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
-class Tbs33bSupport : NvItemTweak() {
+@Parcelize
+class Tbs33bSupport: NvItemTweak(), Parcelable {
+  @IgnoredOnParcel
   override val name = "TBS 33B support for 256QAM LTE"
+  @IgnoredOnParcel
   override val description = "Enable TBS index 33B for 256QAM for ~3% DL performance uplift"
 
   override val nvItems: List<NvItem>

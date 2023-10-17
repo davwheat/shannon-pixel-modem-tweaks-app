@@ -1,7 +1,14 @@
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
-class NrConfigMode : NvItemTweak() {
+import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+class NrConfigMode: NvItemTweak(), Parcelable {
+  @IgnoredOnParcel
   override val name = "Enable NSA and SA 5G modes"
+  @IgnoredOnParcel
   override val description = "Applies to both SIMs"
 
   override val nvItems: List<NvItem>

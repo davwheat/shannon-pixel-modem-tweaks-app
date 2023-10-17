@@ -1,12 +1,18 @@
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems
 
+import android.os.Parcelable
 import dev.davwheat.shannonmodemtweaks.utils.toNvItemHexString
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
-class NrCommHpUePc1Dot5SupportedBands : NvItemTweak() {
+@Parcelize
+class NrCommHpUePc1Dot5SupportedBands: NvItemTweak(), Parcelable {
+  @IgnoredOnParcel
   override val name = "Enable HPUE PC1.5"
+  @IgnoredOnParcel
   override val description = "Enables HPUE power class 1.5 for n41/77"
 
-  private val bands = listOf(41, 77)
+  private val bands get() = listOf(41, 77)
 
   override val nvItems: List<NvItem>
     get() =

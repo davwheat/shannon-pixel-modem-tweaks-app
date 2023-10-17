@@ -1,10 +1,16 @@
 package dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims
 
+import android.os.Parcelable
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItem
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NvItemTweak
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
-class EvsSwbHighBitrateSupport : NvItemTweak() {
+@Parcelize
+class EvsSwbHighBitrateSupport : NvItemTweak(), Parcelable {
+  @IgnoredOnParcel
   override val name = "Enhanced IMS call quality"
+  @IgnoredOnParcel
   override val description = "Enables high bitrate EVS-SWB IMS calls."
 
   override val nvItems: List<NvItem>
