@@ -10,6 +10,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrCsiRsTrsFull50OnA
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeTxAntennaSelectionSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.Qam256UploadSupport
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.SetLteFgis
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.rel14.Tbs33bSupport
 
 val AllTweaks: Map<String, List<Tweak>> =
@@ -39,6 +40,13 @@ val AllTweaks: Map<String, List<Tweak>> =
             "Release 14",
             listOf(
                     Tbs33bSupport(),
+                )
+                .sortedBy { it.name },
+        ),
+        Pair(
+            "Feature group indicators",
+            listOf(
+                    SetLteFgis(),
                 )
                 .sortedBy { it.name },
         ),
