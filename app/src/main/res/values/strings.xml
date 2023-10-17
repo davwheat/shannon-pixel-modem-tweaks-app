@@ -35,4 +35,6 @@
     <string name="reset_nvitems_failed_dialog_lead">We failed to reset your modem\'s nvitems.</string>
     <string name="reset_nvitems_failed_dialog_no_root">You don\'t have root access or haven\'t allowed it for this app.</string>
     <string name="reset_nvitems_failed_dialog_execution_error">An execution error occurred while attempting to rename your nvitems database.</string>
+    <string name="loading_tweak_states_dialog">Loading tweak states… (%1$s/%2$s)</string>
+    <string name="loading_tweak_states_dialog_description">Some items may take up to 30s to process.</string>
 </resources>
