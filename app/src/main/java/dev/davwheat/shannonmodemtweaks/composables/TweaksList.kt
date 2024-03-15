@@ -18,12 +18,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import dev.davwheat.shannonmodemtweaks.R
 import dev.davwheat.shannonmodemtweaks.tweaks.AllTweaks
 import dev.davwheat.shannonmodemtweaks.tweaks.Tweak
@@ -47,6 +51,7 @@ import dev.davwheat.shannonmodemtweaks.utils.InferDevice
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -56,6 +61,12 @@ fun TweaksList() {
   val listState = rememberLazyListState()
   var outputText by rememberSaveable { mutableStateOf(defaultTerminalText) }
   val allowTweaks = InferDevice.shouldAllowTweaks()
+  var isLoadingTweaksState by rememberSaveable { mutableStateOf(allowTweaks) }
+  var tweakStateLoadingProgress by rememberSaveable { mutableIntStateOf(0) }
+  var tweaksState by rememberSaveable { mutableStateOf<Map<Tweak, Boolean?>>(mapOf()) }
+
+  val allTweaks = AllTweaks.entries
+  val tweaksCount = allTweaks.sumOf { it.value.size }
 
   val outputVerticalScrollState = rememberScrollState()
   val outputHorizontalScrollState = rememberScrollState()
@@ -66,10 +77,56 @@ fun TweaksList() {
     scope.launch { outputText = outputText + text + "\n" }
   }
 
+  LaunchedEffect(isLoadingTweaksState) {
+    if (!isLoadingTweaksState) return@LaunchedEffect
+
+    tweaksState =
+        withContext(Dispatchers.IO) {
+          val t = allTweaks.flatMap { it.value }
+
+          mapOf<Tweak, Boolean?>(
+              *t.map { tweak ->
+                    Thread.sleep(50L)
+                    tweakStateLoadingProgress += 1
+                    Pair(tweak, tweak.isTweakEnabled())
+                  }
+                  .toTypedArray())
+        }
+
+    isLoadingTweaksState = false
+  }
+
   LaunchedEffect(outputText) {
     withContext(Dispatchers.Main) {
       outputVerticalScrollState.animateScrollTo(outputVerticalScrollState.maxValue)
       outputHorizontalScrollState.animateScrollTo(0)
+    }
+  }
+
+  if (isLoadingTweaksState) {
+    Dialog(onDismissRequest = {}) {
+      Surface(modifier = Modifier.clip(RoundedCornerShape(8.dp))) {
+        Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
+          Text(
+              stringResource(
+                  R.string.loading_tweak_states_dialog,
+                  tweakStateLoadingProgress,
+                  tweaksCount,
+              ),
+              style = MaterialTheme.typography.bodyLarge,
+              modifier = Modifier.padding(bottom = 8.dp),
+          )
+          Text(
+              stringResource(R.string.loading_tweak_states_dialog_description),
+              style = MaterialTheme.typography.bodyMedium,
+              modifier = Modifier.padding(bottom = 16.dp),
+          )
+          LinearProgressIndicator(
+              progress = { tweakStateLoadingProgress.toFloat() / tweaksCount },
+              modifier = Modifier.fillMaxWidth(),
+          )
+        }
+      }
     }
   }
 
@@ -80,14 +137,12 @@ fun TweaksList() {
         modifier = Modifier.fillMaxSize().weight(66f),
         state = listState,
         content = {
-          item {
-            IsNsgRunningCheck(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp))
-          }
-
           if (!allowTweaks) {
             item {
               Surface(
-                  modifier = Modifier.padding(horizontal = 16.dp).clip(RoundedCornerShape(8.dp)),
+                  modifier =
+                      Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                          .clip(RoundedCornerShape(8.dp)),
                   tonalElevation = 2.dp,
                   shadowElevation = 2.dp,
               ) {
@@ -115,7 +170,7 @@ fun TweaksList() {
             }
           }
 
-          AllTweaks.entries.forEach { (category, tweaks) ->
+          allTweaks.forEach { (category, tweaks) ->
             stickyHeader(key = category) { TweaksCategoryHeader(category = category) }
 
             items(tweaks) {
@@ -123,7 +178,14 @@ fun TweaksList() {
                   tweak = it,
                   enabled = allowTweaks,
                   onOutput = ::appendToOutput,
-              )
+                  isTweakApplied = tweaksState[it],
+                  onTweakApplied = {
+                    scope.launch {
+                      val map = tweaksState.toMutableMap()
+                      map[it] = withContext(Dispatchers.IO) { it.isTweakEnabled() }
+                      tweaksState = map
+                    }
+                  })
             }
           }
         },
@@ -156,7 +218,7 @@ fun TweaksList() {
 
 @Composable
 fun TweaksCategoryHeader(modifier: Modifier = Modifier, category: String) {
-  Surface(modifier = modifier.fillMaxWidth().padding(top = 12.dp)) {
+  Surface(modifier = modifier.fillMaxWidth()) {
     Row(
         modifier =
             Modifier.padding(
@@ -173,35 +235,55 @@ fun TweaksListItem(
     modifier: Modifier = Modifier,
     tweak: Tweak,
     enabled: Boolean,
-    onOutput: (String) -> Unit
+    onOutput: (String) -> Unit,
+    isTweakApplied: Boolean?,
+    onTweakApplied: () -> Unit,
 ) {
-  Surface(
-      modifier =
-          Modifier.clickable {
-            if (enabled) {
-              val (success, output) = tweak.applyTweak()
+  var isEnabling by rememberSaveable { mutableStateOf(false) }
 
-              onOutput(
-                  "${if (success) "Success" else "Failure"} - ${tweak.name}:\n\n${output}\n${"-".repeat(32)}",
-              )
-            }
-          }) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.padding(vertical = 12.dp, horizontal = 16.dp),
-        ) {
-          Column(
-              modifier = Modifier.weight(1f).padding(end = 16.dp),
-          ) {
-            Text(
-                text = tweak.name,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
-            Text(text = tweak.description, style = MaterialTheme.typography.bodyMedium)
-          }
-        }
+  fun enableTweak() {
+    if (!enabled || (isTweakApplied != false && !tweak.canBeDisabled)) return
+
+    isEnabling = true
+
+    val (success, output) = tweak.applyTweak()
+
+    isEnabling = false
+
+    onOutput(
+        "${if (success) "Success" else "Failure"} - ${tweak.name}:\n\n${output}\n${"-".repeat(32)}",
+    )
+    onTweakApplied()
+  }
+
+  Timber.d(tweak.name)
+  Timber.d("isEnabling: $isEnabling")
+  Timber.d("isTweakApplied: $isTweakApplied")
+  Timber.d("-----------")
+
+  Surface(modifier = Modifier.clickable { enableTweak() }) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+    ) {
+      Column(
+          modifier = Modifier.weight(1f).padding(end = 16.dp),
+      ) {
+        Text(
+            text = tweak.name,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
+        Text(text = tweak.description, style = MaterialTheme.typography.bodyMedium)
       }
+
+      Switch(
+          checked = isTweakApplied == true || isEnabling,
+          enabled = (isTweakApplied == false && !tweak.canBeDisabled) && enabled,
+          onCheckedChange = { enableTweak() },
+      )
+    }
+  }
 }
 
 @Composable

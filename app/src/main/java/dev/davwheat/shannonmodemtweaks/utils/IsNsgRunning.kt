@@ -12,7 +12,7 @@ object IsNsgRunning {
     }
 
     Timber.d(
-        "Is NSG running? Ret code ${out[0]?.first} ${out[0]?.second?.contains("com.qtrun.QuickTest")}")
+        "Is NSG running? Ret code: ${out[0]?.first}, result: ${out[0]?.second?.contains("com.qtrun.QuickTest")}")
 
     return out[0]?.second?.contains("com.qtrun.QuickTest")
   }
