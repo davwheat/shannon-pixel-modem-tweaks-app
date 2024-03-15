@@ -122,7 +122,7 @@ fun TweaksList() {
               modifier = Modifier.padding(bottom = 16.dp),
           )
           LinearProgressIndicator(
-              progress = tweakStateLoadingProgress.toFloat() / tweaksCount,
+              progress = { tweakStateLoadingProgress.toFloat() / tweaksCount },
               modifier = Modifier.fillMaxWidth(),
           )
         }
