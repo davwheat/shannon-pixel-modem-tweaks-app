@@ -15,6 +15,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -74,6 +77,8 @@ private fun IsNsgRunningCheckResult(
 ) {
   Surface(
       modifier = modifier.clip(RoundedCornerShape(8.dp)).fillMaxWidth(),
+      color = MaterialTheme.colorScheme.errorContainer,
+      contentColor = MaterialTheme.colorScheme.onErrorContainer,
       tonalElevation = 2.dp,
       shadowElevation = 2.dp,
   ) {
@@ -85,16 +90,23 @@ private fun IsNsgRunningCheckResult(
       Text(
           stringResource(R.string.nsg_running_warning),
           textAlign = TextAlign.Center,
+          fontWeight = FontWeight.Bold,
       )
 
       Button(
           enabled = !isRefreshing,
           onClick = { onRecheck() },
+          colors =
+              ButtonDefaults.buttonColors(
+                  containerColor = MaterialTheme.colorScheme.error,
+                  contentColor = MaterialTheme.colorScheme.onError,
+              ),
       ) {
         if (isRefreshing) {
           CircularProgressIndicator(
               modifier = Modifier.size(ButtonDefaults.IconSize),
               strokeWidth = 2.dp,
+              color = LocalContentColor.current,
           )
         } else {
           Icon(
