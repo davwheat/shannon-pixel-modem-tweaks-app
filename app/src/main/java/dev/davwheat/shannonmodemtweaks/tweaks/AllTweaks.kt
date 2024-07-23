@@ -4,6 +4,8 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.AdditionalNrSaLocking
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.LteRrcLoggedMeas
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrCommHpUePc1Dot5SupportedBands
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrConfigMode
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrMmwave
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrRoaming
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrCsiRsTrsFull50OnAllCcs
@@ -57,4 +59,12 @@ val AllTweaks: Map<String, List<Tweak>> =
       )
         .sortedBy { it.name },
     ),
+    Pair(
+      "HandyMenny",
+      listOf(
+        NrRoaming(),
+        NrMmwave()
+      )
+        .sortedBy { it.name },
+    )
   )
