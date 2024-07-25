@@ -15,12 +15,12 @@ class NrMmwave: NvItemTweak(), Parcelable {
   override val nvItems: List<NvItem>
     get() =
         listOf(
-            NvItem(id = "UECAPA_NR_RF_BAND_FR2_BM", value = "5A,CO"),
+            NvItem(id = "UECAPA_NR_RF_BAND_FR2_BM", value = 49242.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_21_FBI", value = 10257.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_22_FBI", value = 10258.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_23_FBI", value = 10260.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_24_FBI", value = 10261.toNvItemHexString(2)),
-            NvItem(id = "UECAPA_NR_RF_BAND_FR2_BM_DS", value = "5A,CO"),
+            NvItem(id = "UECAPA_NR_RF_BAND_FR2_BM_DS", value = 49242.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_21_FBI_DS", value = 10257.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_22_FBI_DS", value = 10258.toNvItemHexString(2)),
             NvItem(id = "UECAPA_NR_RF_BAND_23_FBI_DS", value = 10260.toNvItemHexString(2)),
