@@ -7,7 +7,9 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrConfigMode
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrMmwave
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrRoaming
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSupport
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.Segmentation
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.DisableCapabilitiesFilters
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrCsiRsTrsFull50OnAllCcs
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeTxAntennaSelectionSupport
@@ -63,7 +65,8 @@ val AllTweaks: Map<String, List<Tweak>> =
       "HandyMenny",
       listOf(
         NrRoaming(),
-        NrMmwave()
+        NrMmwave(),
+        Segmentation(),
       )
         .sortedBy { it.name },
     )
