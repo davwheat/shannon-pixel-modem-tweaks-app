@@ -17,9 +17,11 @@ class Qam256UploadSupport : NvItemTweak(), Parcelable {
   override val nvItems: List<NvItem>
     get() =
       listOf(
+        NvItem(id = "UECAPA_REL12_CATEGORY_UL", value = "12"),
         NvItem(id = "UECAPA_REL14_UL_256QAM_SUPPORT", value = "01"),
         NvItem(id = "UECAPA_REL15_FSULPCC_1_256Q", value = "01"),
         NvItem(id = "UECAPA_REL15_FSULPCC_2_256Q", value = "01"),
+        NvItem(id = "UECAPA_REL14_UL_256QAM_SUPPORT", index = 1, value = "01"),
         NvItem(id = "UECAPA_REL14_UL_256QAM_SUPPORT", index = 1, value = "01"),
         NvItem(id = "UECAPA_REL15_FSULPCC_1_256Q_DS", value = "01"),
         NvItem(id = "UECAPA_REL15_FSULPCC_2_256Q_DS", value = "01")
