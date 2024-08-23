@@ -75,6 +75,7 @@ fun MainActivityContent() {
                   topAppBarColors(
                       containerColor = MaterialTheme.colorScheme.primary,
                       titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                      scrolledContainerColor = MaterialTheme.colorScheme.primary,
                   ),
           )
         },
