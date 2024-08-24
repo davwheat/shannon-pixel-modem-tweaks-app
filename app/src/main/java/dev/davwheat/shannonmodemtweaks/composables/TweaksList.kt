@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -72,6 +73,7 @@ fun TweaksList() {
   val outputHorizontalScrollState = rememberScrollState()
 
   val scope = rememberCoroutineScope()
+  val device = remember { InferDevice.getDevice().first }
 
   fun appendToOutput(text: String) {
     scope.launch { outputText = outputText + text + "\n" }
@@ -81,17 +83,17 @@ fun TweaksList() {
     if (!isLoadingTweaksState) return@LaunchedEffect
 
     tweaksState =
-        withContext(Dispatchers.IO) {
-          val t = allTweaks.flatMap { it.value }
+      withContext(Dispatchers.IO) {
+        val t = allTweaks.flatMap { it.value }
 
-          mapOf<Tweak, Boolean?>(
-              *t.map { tweak ->
-                    Thread.sleep(50L)
-                    tweakStateLoadingProgress += 1
-                    Pair(tweak, tweak.isTweakEnabled())
-                  }
-                  .toTypedArray())
-        }
+        mapOf<Tweak, Boolean?>(
+          *t.map { tweak ->
+            Thread.sleep(50L)
+            tweakStateLoadingProgress += 1
+            Pair(tweak, tweak.isTweakEnabled())
+          }
+            .toTypedArray())
+      }
 
     isLoadingTweaksState = false
   }
@@ -106,24 +108,26 @@ fun TweaksList() {
   if (isLoadingTweaksState) {
     Dialog(onDismissRequest = {}) {
       Surface(modifier = Modifier.clip(RoundedCornerShape(8.dp))) {
-        Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
+        Column(modifier = Modifier
+          .padding(24.dp)
+          .fillMaxWidth()) {
           Text(
-              stringResource(
-                  R.string.loading_tweak_states_dialog,
-                  tweakStateLoadingProgress,
-                  tweaksCount,
-              ),
-              style = MaterialTheme.typography.bodyLarge,
-              modifier = Modifier.padding(bottom = 8.dp),
+            stringResource(
+              R.string.loading_tweak_states_dialog,
+              tweakStateLoadingProgress,
+              tweaksCount,
+            ),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(bottom = 8.dp),
           )
           Text(
-              stringResource(R.string.loading_tweak_states_dialog_description),
-              style = MaterialTheme.typography.bodyMedium,
-              modifier = Modifier.padding(bottom = 16.dp),
+            stringResource(R.string.loading_tweak_states_dialog_description),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(bottom = 16.dp),
           )
           LinearProgressIndicator(
-              progress = { tweakStateLoadingProgress.toFloat() / tweaksCount },
-              modifier = Modifier.fillMaxWidth(),
+            progress = { tweakStateLoadingProgress.toFloat() / tweaksCount },
+            modifier = Modifier.fillMaxWidth(),
           )
         }
       }
@@ -131,85 +135,92 @@ fun TweaksList() {
   }
 
   Column(
-      modifier = Modifier.fillMaxSize(),
+    modifier = Modifier.fillMaxSize(),
   ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().weight(66f),
-        state = listState,
-        content = {
-          if (!allowTweaks) {
-            item {
-              Surface(
-                  modifier =
-                      Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
-                          .clip(RoundedCornerShape(8.dp)),
-                  tonalElevation = 2.dp,
-                  shadowElevation = 2.dp,
+      modifier = Modifier
+        .fillMaxSize()
+        .weight(66f),
+      state = listState,
+      content = {
+        if (!allowTweaks) {
+          item {
+            Surface(
+              modifier =
+              Modifier
+                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .clip(RoundedCornerShape(8.dp)),
+              tonalElevation = 2.dp,
+              shadowElevation = 2.dp,
+            ) {
+              Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(16.dp),
               ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(16.dp),
-                ) {
-                  Text(
-                      stringResource(R.string.tweaks_disabled_main),
-                      textAlign = TextAlign.Center,
-                      fontWeight = FontWeight.Bold,
-                  )
-                  Text(
-                      stringResource(R.string.tweaks_disabled_supporting_1),
-                      textAlign = TextAlign.Center,
-                      style = MaterialTheme.typography.bodyMedium,
-                  )
-                  Text(
-                      stringResource(R.string.tweaks_disabled_supporting_2),
-                      textAlign = TextAlign.Center,
-                      style = MaterialTheme.typography.bodyMedium,
-                  )
-                }
+                Text(
+                  stringResource(R.string.tweaks_disabled_main),
+                  textAlign = TextAlign.Center,
+                  fontWeight = FontWeight.Bold,
+                )
+                Text(
+                  stringResource(R.string.tweaks_disabled_supporting_1),
+                  textAlign = TextAlign.Center,
+                  style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                  stringResource(R.string.tweaks_disabled_supporting_2),
+                  textAlign = TextAlign.Center,
+                  style = MaterialTheme.typography.bodyMedium,
+                )
               }
             }
           }
+        }
 
-          allTweaks.forEach { (category, tweaks) ->
-            stickyHeader(key = category) { TweaksCategoryHeader(category = category) }
+        allTweaks.forEach { (category, tweaks) ->
+          stickyHeader(key = category) { TweaksCategoryHeader(category = category) }
 
-            items(tweaks) {
-              TweaksListItem(
-                  tweak = it,
-                  enabled = allowTweaks,
-                  onOutput = ::appendToOutput,
-                  isTweakApplied = tweaksState[it],
-                  onTweakApplied = {
-                    scope.launch {
-                      val map = tweaksState.toMutableMap()
-                      map[it] = withContext(Dispatchers.IO) { it.isTweakEnabled() }
-                      tweaksState = map
-                    }
-                  })
-            }
+          items(tweaks.filter {
+            it.isTweakCompatible(device)
+          }) {
+            TweaksListItem(
+              tweak = it,
+              enabled = allowTweaks,
+              onOutput = ::appendToOutput,
+              isTweakApplied = tweaksState[it],
+              onTweakApplied = {
+                scope.launch {
+                  val map = tweaksState.toMutableMap()
+                  map[it] = withContext(Dispatchers.IO) { it.isTweakEnabled() }
+                  tweaksState = map
+                }
+              },
+            )
           }
-        },
+        }
+      },
     )
 
     Box(
-        modifier =
-            Modifier.weight(34f)
-                .background(Color.Black)
-                .fillMaxSize()
-                .verticalScroll(outputVerticalScrollState)
-                .horizontalScroll(outputHorizontalScrollState),
+      modifier =
+      Modifier
+        .weight(34f)
+        .background(Color.Black)
+        .fillMaxSize()
+        .verticalScroll(outputVerticalScrollState)
+        .horizontalScroll(outputHorizontalScrollState),
     ) {
       SelectionContainer {
         Text(
-            text = outputText,
-            modifier = Modifier.padding(8.dp),
-            color = Color.White,
-            style =
-                TextStyle(
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                ),
+          text = outputText,
+          modifier = Modifier.padding(8.dp),
+          color = Color.White,
+          style =
+          TextStyle(
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Normal,
+            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+          ),
         )
       }
     }
@@ -220,24 +231,25 @@ fun TweaksList() {
 fun TweaksCategoryHeader(modifier: Modifier = Modifier, category: String) {
   Surface(modifier = modifier.fillMaxWidth()) {
     Row(
-        modifier =
-            Modifier.padding(
-                horizontal = 12.dp,
-                vertical = 8.dp,
-            )) {
-          Text(text = category, style = MaterialTheme.typography.titleMedium)
-        }
+      modifier =
+      Modifier.padding(
+        horizontal = 12.dp,
+        vertical = 8.dp,
+      )
+    ) {
+      Text(text = category, style = MaterialTheme.typography.titleMedium)
+    }
   }
 }
 
 @Composable
 fun TweaksListItem(
-    modifier: Modifier = Modifier,
-    tweak: Tweak,
-    enabled: Boolean,
-    onOutput: (String) -> Unit,
-    isTweakApplied: Boolean?,
-    onTweakApplied: () -> Unit,
+  modifier: Modifier = Modifier,
+  tweak: Tweak,
+  enabled: Boolean,
+  onOutput: (String) -> Unit,
+  isTweakApplied: Boolean?,
+  onTweakApplied: () -> Unit,
 ) {
   var isEnabling by rememberSaveable { mutableStateOf(false) }
 
@@ -251,7 +263,7 @@ fun TweaksListItem(
     isEnabling = false
 
     onOutput(
-        "${if (success) "Success" else "Failure"} - ${tweak.name}:\n\n${output}\n${"-".repeat(32)}",
+      "${if (success) "Success" else "Failure"} - ${tweak.name}:\n\n${output}\n${"-".repeat(32)}",
     )
     onTweakApplied()
   }
@@ -263,24 +275,26 @@ fun TweaksListItem(
 
   Surface(modifier = Modifier.clickable { enableTweak() }) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+      verticalAlignment = Alignment.CenterVertically,
+      modifier = modifier.padding(vertical = 12.dp, horizontal = 16.dp),
     ) {
       Column(
-          modifier = Modifier.weight(1f).padding(end = 16.dp),
+        modifier = Modifier
+          .weight(1f)
+          .padding(end = 16.dp),
       ) {
         Text(
-            text = tweak.name,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp),
+          text = tweak.name,
+          style = MaterialTheme.typography.bodyLarge,
+          modifier = Modifier.padding(bottom = 8.dp),
         )
         Text(text = tweak.description, style = MaterialTheme.typography.bodyMedium)
       }
 
       Switch(
-          checked = isTweakApplied == true || isEnabling,
-          enabled = (isTweakApplied == false && !tweak.canBeDisabled) && enabled,
-          onCheckedChange = { enableTweak() },
+        checked = isTweakApplied == true || isEnabling,
+        enabled = (isTweakApplied == false && !tweak.canBeDisabled) && enabled,
+        onCheckedChange = { enableTweak() },
       )
     }
   }

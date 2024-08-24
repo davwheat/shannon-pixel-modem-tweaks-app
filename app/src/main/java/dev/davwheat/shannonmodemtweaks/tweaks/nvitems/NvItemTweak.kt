@@ -4,6 +4,7 @@ import android.os.Parcelable
 import dev.davwheat.shannonmodemtweaks.tweaks.Tweak
 import dev.davwheat.shannonmodemtweaks.tweaks.TweakType
 import dev.davwheat.shannonmodemtweaks.utils.ExecuteAsRoot
+import dev.davwheat.shannonmodemtweaks.utils.InferDevice
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
