@@ -7,9 +7,10 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class Tbs33bSupport: NvItemTweak(), Parcelable {
+class Tbs33bSupport : NvItemTweak(), Parcelable {
   @IgnoredOnParcel
   override val name = "TBS 33B support for 256QAM LTE"
+
   @IgnoredOnParcel
   override val description = "Enable TBS index 33B for 256QAM for ~3% DL performance uplift"
 

@@ -42,7 +42,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun IsNsgRunningCheck(
-    modifier: Modifier = Modifier,
+  modifier: Modifier = Modifier,
 ) {
 
   var isNsgRunning by rememberSaveable { mutableStateOf<Boolean?>(null) }
@@ -71,48 +71,50 @@ fun IsNsgRunningCheck(
 
 @Composable
 private fun IsNsgRunningCheckResult(
-    modifier: Modifier = Modifier,
-    isRefreshing: Boolean,
-    onRecheck: () -> Unit
+  modifier: Modifier = Modifier,
+  isRefreshing: Boolean,
+  onRecheck: () -> Unit,
 ) {
   Surface(
-      modifier = modifier.clip(RoundedCornerShape(8.dp)).fillMaxWidth(),
-      color = MaterialTheme.colorScheme.errorContainer,
-      contentColor = MaterialTheme.colorScheme.onErrorContainer,
-      tonalElevation = 2.dp,
-      shadowElevation = 2.dp,
+    modifier = modifier
+      .clip(RoundedCornerShape(8.dp))
+      .fillMaxWidth(),
+    color = MaterialTheme.colorScheme.errorContainer,
+    contentColor = MaterialTheme.colorScheme.onErrorContainer,
+    tonalElevation = 2.dp,
+    shadowElevation = 2.dp,
   ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.spacedBy(16.dp),
+      modifier = Modifier.padding(16.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       Text(
-          stringResource(R.string.nsg_running_warning),
-          textAlign = TextAlign.Center,
-          fontWeight = FontWeight.Bold,
+        stringResource(R.string.nsg_running_warning),
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold,
       )
 
       Button(
-          enabled = !isRefreshing,
-          onClick = { onRecheck() },
-          colors =
-              ButtonDefaults.buttonColors(
-                  containerColor = MaterialTheme.colorScheme.error,
-                  contentColor = MaterialTheme.colorScheme.onError,
-              ),
+        enabled = !isRefreshing,
+        onClick = { onRecheck() },
+        colors =
+        ButtonDefaults.buttonColors(
+          containerColor = MaterialTheme.colorScheme.error,
+          contentColor = MaterialTheme.colorScheme.onError,
+        ),
       ) {
         if (isRefreshing) {
           CircularProgressIndicator(
-              modifier = Modifier.size(ButtonDefaults.IconSize),
-              strokeWidth = 2.dp,
-              color = LocalContentColor.current,
+            modifier = Modifier.size(ButtonDefaults.IconSize),
+            strokeWidth = 2.dp,
+            color = LocalContentColor.current,
           )
         } else {
           Icon(
-              Icons.Rounded.Refresh,
-              contentDescription = null,
-              modifier = Modifier.size(ButtonDefaults.IconSize),
+            Icons.Rounded.Refresh,
+            contentDescription = null,
+            modifier = Modifier.size(ButtonDefaults.IconSize),
           )
         }
         Spacer(Modifier.width(ButtonDefaults.IconSpacing))
@@ -126,7 +128,7 @@ private fun IsNsgRunningCheckResult(
 @Composable
 private fun IsNsgRunningPreview() {
   Column(
-      verticalArrangement = Arrangement.spacedBy(8.dp),
+    verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
     IsNsgRunningCheckResult(isRefreshing = true) {}
     IsNsgRunningCheckResult(isRefreshing = false) {}

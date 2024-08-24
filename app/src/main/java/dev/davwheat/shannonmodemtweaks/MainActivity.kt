@@ -60,62 +60,63 @@ fun MainActivityContent() {
 
   ShannonModemTweaksTheme {
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-          TopAppBar(
-              title = {
-                Text(
-                    stringResource(R.string.app_name),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-              },
-              scrollBehavior = scrollBehavior,
-              colors =
-                  topAppBarColors(
-                      containerColor = MaterialTheme.colorScheme.primary,
-                      titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                      scrolledContainerColor = MaterialTheme.colorScheme.primary,
-                  ),
-          )
-        },
-        content = { padding ->
-          Surface(
-              modifier = Modifier.padding(padding), color = MaterialTheme.colorScheme.background) {
-                NavHost(
-                    navController = navController,
-                    startDestination = Screen.Info.route,
-                ) {
-                  composable(Screen.Info.route) { MainScreen() }
-                  composable(Screen.Tweaks.route) { TweaksList() }
-                }
-              }
-        },
-        bottomBar = {
-          NavigationBar {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-
-            navItems.forEach { screen ->
-              NavigationBarItem(
-                  icon = {
-                    Icon(screen.icon, contentDescription = stringResource(id = screen.resourceId))
-                  },
-                  label = { Text(stringResource(id = screen.resourceId)) },
-                  selected =
-                      currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                  onClick = {
-                    if (currentDestination?.route != screen.route) {
-                      navController.navigate(screen.route) {
-                        popUpTo(navController.graph.startDestinationId)
-                        launchSingleTop = true
-                      }
-                    }
-                  },
-              )
-            }
+      modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+      topBar = {
+        TopAppBar(
+          title = {
+            Text(
+              stringResource(R.string.app_name),
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis,
+            )
+          },
+          scrollBehavior = scrollBehavior,
+          colors =
+          topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            scrolledContainerColor = MaterialTheme.colorScheme.primary,
+          ),
+        )
+      },
+      content = { padding ->
+        Surface(
+          modifier = Modifier.padding(padding), color = MaterialTheme.colorScheme.background
+        ) {
+          NavHost(
+            navController = navController,
+            startDestination = Screen.Info.route,
+          ) {
+            composable(Screen.Info.route) { MainScreen() }
+            composable(Screen.Tweaks.route) { TweaksList() }
           }
-        },
+        }
+      },
+      bottomBar = {
+        NavigationBar {
+          val navBackStackEntry by navController.currentBackStackEntryAsState()
+          val currentDestination = navBackStackEntry?.destination
+
+          navItems.forEach { screen ->
+            NavigationBarItem(
+              icon = {
+                Icon(screen.icon, contentDescription = stringResource(id = screen.resourceId))
+              },
+              label = { Text(stringResource(id = screen.resourceId)) },
+              selected =
+              currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+              onClick = {
+                if (currentDestination?.route != screen.route) {
+                  navController.navigate(screen.route) {
+                    popUpTo(navController.graph.startDestinationId)
+                    launchSingleTop = true
+                  }
+                }
+              },
+            )
+          }
+        }
+      },
     )
   }
 }

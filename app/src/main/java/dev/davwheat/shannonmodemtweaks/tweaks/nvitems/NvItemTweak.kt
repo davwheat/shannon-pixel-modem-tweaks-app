@@ -4,12 +4,11 @@ import android.os.Parcelable
 import dev.davwheat.shannonmodemtweaks.tweaks.Tweak
 import dev.davwheat.shannonmodemtweaks.tweaks.TweakType
 import dev.davwheat.shannonmodemtweaks.utils.ExecuteAsRoot
-import dev.davwheat.shannonmodemtweaks.utils.InferDevice
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
 @Parcelize
-class NvItem(val id: String, val value: String, val index: Int = 0): Parcelable {
+class NvItem(val id: String, val value: String, val index: Int = 0) : Parcelable {
   init {
     require(!id.contains(regex = Regex("""[\\"]"""))) {
       "nvitem cannot contain backslashes or quotes"
@@ -85,53 +84,54 @@ abstract class NvItemTweak : Tweak() {
     }
 
     isEnabled =
-        nvItems.all {
-          var attempts = 0
+      nvItems.all {
+        var attempts = 0
 
-          while (attempts < 3) {
-            // If we don't have the result cached, fetch it from the modem
-            if (!setNvItems.containsKey(it.id)) {
-              // Execute GETNV command
-              val cmd =
-                  "echo 'AT+GOOGGETNV=\"${it.id}\"\\r' > /dev/umts_router & cat /dev/umts_router"
+        while (attempts < 3) {
+          // If we don't have the result cached, fetch it from the modem
+          if (!setNvItems.containsKey(it.id)) {
+            // Execute GETNV command
+            val cmd =
+              "echo 'AT+GOOGGETNV=\"${it.id}\"\\r' > /dev/umts_router & cat /dev/umts_router"
 
-              Timber.d("Executing command: $cmd")
-              val result = ExecuteAsRoot.executeAsRoot(listOf(cmd)) ?: return@all false
+            Timber.d("Executing command: $cmd")
+            val result = ExecuteAsRoot.executeAsRoot(listOf(cmd)) ?: return@all false
 
-              val (_, output) = result[0] ?: return false
-              Timber.d(output)
-              val wasOk = output.lowercase().contains("ok")
+            val (_, output) = result[0] ?: return false
+            Timber.d(output)
+            val wasOk = output.lowercase().contains("ok")
 
-              val nvItems = parseGetNvItemOutput(output)
+            val nvItems = parseGetNvItemOutput(output)
 
-              if (!wasOk) {
-                // Sometimes the modem doesn't respond to the command, so we retry
-                Timber.d("No nvitems found, retrying...")
-                ++attempts
-                Thread.sleep((attempts * 500).toLong())
-                continue
-              }
-
-              setNvItems[it.id] = nvItems
+            if (!wasOk) {
+              // Sometimes the modem doesn't respond to the command, so we retry
+              Timber.d("No nvitems found, retrying...")
+              ++attempts
+              Thread.sleep((attempts * 500).toLong())
+              continue
             }
 
-            break
+            setNvItems[it.id] = nvItems
           }
 
-          val out =
-              setNvItems[it.id]?.any { nv ->
-                Timber.d(
-                    "Comparing ${nv.id}: ${nv.index}, ${nv.value} to ${it.index}, ${it.value}")
-
-                it.index == nv.index && it.value == nv.value
-              } ?: false
-
-          if (!out) {
-            Timber.d("nvitem '${it.id}',${it.index} does not have value ${it.value}")
-          }
-
-          out
+          break
         }
+
+        val out =
+          setNvItems[it.id]?.any { nv ->
+            Timber.d(
+              "Comparing ${nv.id}: ${nv.index}, ${nv.value} to ${it.index}, ${it.value}"
+            )
+
+            it.index == nv.index && it.value == nv.value
+          } ?: false
+
+        if (!out) {
+          Timber.d("nvitem '${it.id}',${it.index} does not have value ${it.value}")
+        }
+
+        out
+      }
 
     if (!isEnabled!!) {
       Timber.d("nvitem tweak '${name}' is NOT ENABLED")
@@ -166,7 +166,7 @@ abstract class NvItemTweak : Tweak() {
 
     Timber.d("Executing command: $cmd")
     val result =
-        ExecuteAsRoot.executeAsRoot(listOf(cmd)) ?: return Pair(false, "Failed to execute command")
+      ExecuteAsRoot.executeAsRoot(listOf(cmd)) ?: return Pair(false, "Failed to execute command")
 
     val (_, output) = result[0] ?: return Pair(false, "**No output**")
     Timber.d("Result: $output")

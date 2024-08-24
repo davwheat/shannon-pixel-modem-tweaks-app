@@ -52,12 +52,12 @@ private fun resetNvItems(): ResetNvItemsState {
   Timber.d("Wiping nvitems")
 
   val result =
-      ExecuteAsRoot.executeAsRoot(
-          listOf(
-              "mv /mnt/vendor/efs/nv_normal.bin /mnt/vendor/efs/nv_normal.bin.old;" +
-                  "mv /mnt/vendor/efs/nv_normal.bin.md5 /mnt/vendor/efs/nv_normal.bin.md5.old",
-          ),
-      )
+    ExecuteAsRoot.executeAsRoot(
+      listOf(
+        "mv /mnt/vendor/efs/nv_normal.bin /mnt/vendor/efs/nv_normal.bin.old;" +
+                "mv /mnt/vendor/efs/nv_normal.bin.md5 /mnt/vendor/efs/nv_normal.bin.md5.old",
+      ),
+    )
 
   if (result == null) {
     Timber.d("Result code: failed to execute as root")
@@ -71,9 +71,9 @@ private fun resetNvItems(): ResetNvItemsState {
   return if (code == 0) {
     Timber.d("Successfully wiped nvitems! Rebooting...")
     ExecuteAsRoot.executeAsRoot(
-        listOf(
-            "reboot",
-        ),
+      listOf(
+        "reboot",
+      ),
     )
 
     ResetNvItemsState.RESETTING
@@ -91,29 +91,33 @@ fun ResetNvItems(modifier: Modifier = Modifier) {
   val scope = rememberCoroutineScope()
 
   Surface(
-      modifier = modifier.clip(RoundedCornerShape(8.dp)).fillMaxWidth(),
-      shadowElevation = 8.dp,
-      tonalElevation = 4.dp,
+    modifier = modifier
+      .clip(RoundedCornerShape(8.dp))
+      .fillMaxWidth(),
+    shadowElevation = 8.dp,
+    tonalElevation = 4.dp,
   ) {
     Column(
-        modifier = Modifier.padding(16.dp).fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+      modifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth(),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       Text(
-          stringResource(R.string.reset_nvitems_lead),
-          textAlign = TextAlign.Center,
-          fontWeight = FontWeight.Bold,
+        stringResource(R.string.reset_nvitems_lead),
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold,
       )
       Text(
-          stringResource(R.string.reset_nvitems_description),
-          textAlign = TextAlign.Center,
+        stringResource(R.string.reset_nvitems_description),
+        textAlign = TextAlign.Center,
       )
       OutlinedButton(onClick = { state = ResetNvItemsState.CONFIRMATION }) {
         Icon(
-            Icons.Rounded.Restore,
-            contentDescription = null,
-            modifier = Modifier.size(ButtonDefaults.IconSize),
+          Icons.Rounded.Restore,
+          contentDescription = null,
+          modifier = Modifier.size(ButtonDefaults.IconSize),
         )
         Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
         Text(stringResource(R.string.reset_nvitems_cta))
@@ -124,119 +128,121 @@ fun ResetNvItems(modifier: Modifier = Modifier) {
   when (state) {
     ResetNvItemsState.NONE -> {}
     ResetNvItemsState.FAILED_NO_ROOT ->
-        FailedResetNvItemsNoRootDialog { state = ResetNvItemsState.NONE }
+      FailedResetNvItemsNoRootDialog { state = ResetNvItemsState.NONE }
+
     ResetNvItemsState.FAILED_EXECUTION ->
-        FailedResetNvItemsExecutionErrorDialog { state = ResetNvItemsState.NONE }
+      FailedResetNvItemsExecutionErrorDialog { state = ResetNvItemsState.NONE }
+
     ResetNvItemsState.RESETTING -> ResettingNvItemsDialog()
     ResetNvItemsState.CONFIRMATION ->
-        ResetNvItemsDialog(
-            onDismissRequest = { state = ResetNvItemsState.NONE },
-            onConfirm = {
-              state = ResetNvItemsState.RESETTING
-              scope.launch {
-                withContext(Dispatchers.IO) {
-                  val result = resetNvItems()
+      ResetNvItemsDialog(
+        onDismissRequest = { state = ResetNvItemsState.NONE },
+        onConfirm = {
+          state = ResetNvItemsState.RESETTING
+          scope.launch {
+            withContext(Dispatchers.IO) {
+              val result = resetNvItems()
 
-                  if (result != ResetNvItemsState.RESETTING) {
-                    // Failed to wipe nvitems
-                    state = result
-                  }
-                }
+              if (result != ResetNvItemsState.RESETTING) {
+                // Failed to wipe nvitems
+                state = result
               }
-            },
-        )
+            }
+          }
+        },
+      )
   }
 }
 
 @Composable
 private fun ResetNvItemsDialog(
-    onDismissRequest: () -> Unit,
-    onConfirm: () -> Unit,
+  onDismissRequest: () -> Unit,
+  onConfirm: () -> Unit,
 ) {
   AlertDialog(
-      onDismissRequest = onDismissRequest,
-      confirmButton = {
-        TextButton(onClick = onConfirm) {
-          Text(stringResource(R.string.reset_nvitems_dialog_confirm_cta))
-        }
-      },
-      dismissButton = {
-        TextButton(onClick = onDismissRequest) {
-          Text(stringResource(R.string.reset_nvitems_dialog_dismiss_cta))
-        }
-      },
-      title = { Text(stringResource(R.string.reset_nvitems_dialog_title)) },
-      text = {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-          Text(stringResource(R.string.reset_nvitems_dialog_lead))
-          Text(stringResource(R.string.reset_nvitems_dialog_description))
-        }
-      },
+    onDismissRequest = onDismissRequest,
+    confirmButton = {
+      TextButton(onClick = onConfirm) {
+        Text(stringResource(R.string.reset_nvitems_dialog_confirm_cta))
+      }
+    },
+    dismissButton = {
+      TextButton(onClick = onDismissRequest) {
+        Text(stringResource(R.string.reset_nvitems_dialog_dismiss_cta))
+      }
+    },
+    title = { Text(stringResource(R.string.reset_nvitems_dialog_title)) },
+    text = {
+      Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(stringResource(R.string.reset_nvitems_dialog_lead))
+        Text(stringResource(R.string.reset_nvitems_dialog_description))
+      }
+    },
   )
 }
 
 @Composable
 private fun ResettingNvItemsDialog() {
   AlertDialog(
-      onDismissRequest = {},
-      confirmButton = {},
-      dismissButton = {},
-      title = { Text(stringResource(R.string.reset_nvitems_resetting_dialog_title)) },
-      text = {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-          CircularProgressIndicator()
+    onDismissRequest = {},
+    confirmButton = {},
+    dismissButton = {},
+    title = { Text(stringResource(R.string.reset_nvitems_resetting_dialog_title)) },
+    text = {
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+      ) {
+        CircularProgressIndicator()
 
-          Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(stringResource(R.string.reset_nvitems_resetting_dialog_lead))
-            Text(stringResource(R.string.reset_nvitems_resetting_dialog_description))
-          }
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+          Text(stringResource(R.string.reset_nvitems_resetting_dialog_lead))
+          Text(stringResource(R.string.reset_nvitems_resetting_dialog_description))
         }
-      },
+      }
+    },
   )
 }
 
 @Composable
 private fun FailedResetNvItemsNoRootDialog(
-    onDismissRequest: () -> Unit,
+  onDismissRequest: () -> Unit,
 ) {
   AlertDialog(
-      onDismissRequest = onDismissRequest,
-      confirmButton = {
-        TextButton(onClick = onDismissRequest) {
-          Text(stringResource(R.string.reset_nvitems_failed_dialog_confirm_cta))
-        }
-      },
-      title = { Text(stringResource(R.string.reset_nvitems_failed_dialog_title)) },
-      text = {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-          Text(stringResource(R.string.reset_nvitems_failed_dialog_lead))
-          Text(stringResource(R.string.reset_nvitems_failed_dialog_no_root))
-        }
-      },
+    onDismissRequest = onDismissRequest,
+    confirmButton = {
+      TextButton(onClick = onDismissRequest) {
+        Text(stringResource(R.string.reset_nvitems_failed_dialog_confirm_cta))
+      }
+    },
+    title = { Text(stringResource(R.string.reset_nvitems_failed_dialog_title)) },
+    text = {
+      Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(stringResource(R.string.reset_nvitems_failed_dialog_lead))
+        Text(stringResource(R.string.reset_nvitems_failed_dialog_no_root))
+      }
+    },
   )
 }
 
 @Composable
 private fun FailedResetNvItemsExecutionErrorDialog(
-    onDismissRequest: () -> Unit,
+  onDismissRequest: () -> Unit,
 ) {
   AlertDialog(
-      onDismissRequest = onDismissRequest,
-      confirmButton = {
-        TextButton(onClick = onDismissRequest) {
-          Text(stringResource(R.string.reset_nvitems_failed_dialog_confirm_cta))
-        }
-      },
-      title = { Text(stringResource(R.string.reset_nvitems_failed_dialog_title)) },
-      text = {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-          Text(stringResource(R.string.reset_nvitems_failed_dialog_lead))
-          Text(stringResource(R.string.reset_nvitems_failed_dialog_execution_error))
-        }
-      },
+    onDismissRequest = onDismissRequest,
+    confirmButton = {
+      TextButton(onClick = onDismissRequest) {
+        Text(stringResource(R.string.reset_nvitems_failed_dialog_confirm_cta))
+      }
+    },
+    title = { Text(stringResource(R.string.reset_nvitems_failed_dialog_title)) },
+    text = {
+      Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(stringResource(R.string.reset_nvitems_failed_dialog_lead))
+        Text(stringResource(R.string.reset_nvitems_failed_dialog_execution_error))
+      }
+    },
   )
 }
 
@@ -250,8 +256,8 @@ private fun ResetNvItemsPreview() {
 @Preview
 private fun ResetNvItemsDialogPreview() {
   ResetNvItemsDialog(
-      onDismissRequest = {},
-      onConfirm = {},
+    onDismissRequest = {},
+    onConfirm = {},
   )
 }
 

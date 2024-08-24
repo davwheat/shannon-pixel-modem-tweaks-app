@@ -10,13 +10,14 @@ import kotlinx.parcelize.Parcelize
 class SrsTxSwitch : NvItemTweak(), Parcelable {
   @IgnoredOnParcel
   override val name = "SRS Tx antenna switching"
+
   @IgnoredOnParcel
   override val description =
-      "Device can transmit reference signals on Rx antenna chain to improve DL performance."
+    "Device can transmit reference signals on Rx antenna chain to improve DL performance."
 
   override val nvItems: List<NvItem>
     get() =
-        listOf(
-            NvItem(id = "!NRCAPA.Gen.SrsTxSwitch", value = "01"),
-        )
+      listOf(
+        NvItem(id = "!NRCAPA.Gen.SrsTxSwitch", value = "01"),
+      )
 }

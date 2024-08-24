@@ -108,9 +108,11 @@ fun TweaksList() {
   if (isLoadingTweaksState) {
     Dialog(onDismissRequest = {}) {
       Surface(modifier = Modifier.clip(RoundedCornerShape(8.dp))) {
-        Column(modifier = Modifier
-          .padding(24.dp)
-          .fillMaxWidth()) {
+        Column(
+          modifier = Modifier
+            .padding(24.dp)
+            .fillMaxWidth()
+        ) {
           Text(
             stringResource(
               R.string.loading_tweak_states_dialog,

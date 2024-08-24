@@ -19,34 +19,38 @@ import dev.davwheat.shannonmodemtweaks.utils.InferDevice
 
 @Composable
 fun DeviceInfo(
-    modifier: Modifier = Modifier,
-    device: InferDevice.PixelDevice,
-    certainty: InferDevice.HeuristicsCertainty
+  modifier: Modifier = Modifier,
+  device: InferDevice.PixelDevice,
+  certainty: InferDevice.HeuristicsCertainty,
 ) {
   Surface(
-      modifier = modifier.clip(RoundedCornerShape(8.dp)).fillMaxWidth(),
-      shadowElevation = 8.dp,
-      tonalElevation = 4.dp,
+    modifier = modifier
+      .clip(RoundedCornerShape(8.dp))
+      .fillMaxWidth(),
+    shadowElevation = 8.dp,
+    tonalElevation = 4.dp,
   ) {
     Column(
-        modifier = Modifier.padding(16.dp).fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+      modifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth(),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
       if (device == InferDevice.PixelDevice.UNKNOWN) {
         Text(
-            stringResource(R.string.reports_not_a_pixel),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+          stringResource(R.string.reports_not_a_pixel),
+          textAlign = TextAlign.Center,
+          modifier = Modifier.fillMaxWidth(),
         )
         Text(
-            stringResource(R.string.non_pixel_damage_warning),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+          stringResource(R.string.non_pixel_damage_warning),
+          textAlign = TextAlign.Center,
+          modifier = Modifier.fillMaxWidth(),
         )
         Text(
-            stringResource(R.string.unknown_device_report),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+          stringResource(R.string.unknown_device_report),
+          textAlign = TextAlign.Center,
+          modifier = Modifier.fillMaxWidth(),
         )
 
         return@Column
@@ -55,33 +59,35 @@ fun DeviceInfo(
       when (certainty) {
         InferDevice.HeuristicsCertainty.VERY_LIKELY -> {
           Text(
-              stringResource(R.string.reports_pixel_device, device.humanName),
-              textAlign = TextAlign.Center,
-              modifier = Modifier.fillMaxWidth(),
+            stringResource(R.string.reports_pixel_device, device.humanName),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
           )
         }
+
         InferDevice.HeuristicsCertainty.POTENTIALLY -> {
           Text(
-              stringResource(R.string.reports_possible_pixel_device, device.humanName),
-              textAlign = TextAlign.Center,
-              modifier = Modifier.fillMaxWidth(),
+            stringResource(R.string.reports_possible_pixel_device, device.humanName),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
           )
           Text(
-              stringResource(R.string.non_pixel_damage_warning),
-              textAlign = TextAlign.Center,
-              modifier = Modifier.fillMaxWidth(),
+            stringResource(R.string.non_pixel_damage_warning),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
           )
         }
+
         InferDevice.HeuristicsCertainty.VERY_UNLIKELY -> {
           Text(
-              stringResource(R.string.reports_unknown_device),
-              textAlign = TextAlign.Center,
-              modifier = Modifier.fillMaxWidth(),
+            stringResource(R.string.reports_unknown_device),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
           )
           Text(
-              stringResource(R.string.non_pixel_damage_warning),
-              textAlign = TextAlign.Center,
-              modifier = Modifier.fillMaxWidth(),
+            stringResource(R.string.non_pixel_damage_warning),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
           )
         }
       }
@@ -93,7 +99,7 @@ fun DeviceInfo(
 @Preview
 private fun DeviceInfoPreview() {
   DeviceInfo(
-      device = InferDevice.PixelDevice.PIXEL_8_PRO,
-      certainty = InferDevice.HeuristicsCertainty.VERY_LIKELY,
+    device = InferDevice.PixelDevice.PIXEL_8_PRO,
+    certainty = InferDevice.HeuristicsCertainty.VERY_LIKELY,
   )
 }

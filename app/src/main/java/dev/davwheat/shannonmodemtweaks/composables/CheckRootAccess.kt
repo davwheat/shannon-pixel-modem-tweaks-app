@@ -47,91 +47,97 @@ enum class RootCheckState {
 
 @Composable
 fun CheckRootAccess(
-    modifier: Modifier = Modifier,
-    rootCheckState: RootCheckState,
-    onUpdateRootCheckState: (RootCheckState) -> Unit = {}
+  modifier: Modifier = Modifier,
+  rootCheckState: RootCheckState,
+  onUpdateRootCheckState: (RootCheckState) -> Unit = {},
 ) {
   var loadingRootCheck by rememberSaveable { mutableStateOf(false) }
 
   Surface(
-      modifier = modifier.clip(RoundedCornerShape(8.dp)).fillMaxWidth(),
-      shadowElevation = 8.dp,
-      tonalElevation = 4.dp,
+    modifier = modifier
+      .clip(RoundedCornerShape(8.dp))
+      .fillMaxWidth(),
+    shadowElevation = 8.dp,
+    tonalElevation = 4.dp,
   ) {
     AnimatedContent(targetState = rootCheckState, label = "Root check") {
       if (it == RootCheckState.PASSED) {
         Column(
-            modifier = Modifier.padding(16.dp).fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+          modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+          verticalArrangement = Arrangement.spacedBy(8.dp),
+          horizontalAlignment = Alignment.CenterHorizontally,
         ) {
           Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                Icons.Rounded.GppGood,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(end = 8.dp),
+              Icons.Rounded.GppGood,
+              contentDescription = null,
+              tint = MaterialTheme.colorScheme.primary,
+              modifier = Modifier.padding(end = 8.dp),
             )
             Text(
-                stringResource(R.string.root_access_success),
-                textAlign = TextAlign.Center,
+              stringResource(R.string.root_access_success),
+              textAlign = TextAlign.Center,
             )
           }
         }
       } else {
         Column(
-            modifier = Modifier.padding(16.dp).fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+          modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+          verticalArrangement = Arrangement.spacedBy(8.dp),
+          horizontalAlignment = Alignment.CenterHorizontally,
         ) {
           if (it == RootCheckState.FAILED) {
             Row(verticalAlignment = Alignment.CenterVertically) {
               Icon(
-                  Icons.Rounded.GppBad,
-                  contentDescription = null,
-                  tint = MaterialTheme.colorScheme.error,
-                  modifier = Modifier.padding(end = 8.dp),
+                Icons.Rounded.GppBad,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(end = 8.dp),
               )
               Text(
-                  stringResource(R.string.root_access_fail),
-                  textAlign = TextAlign.Center,
+                stringResource(R.string.root_access_fail),
+                textAlign = TextAlign.Center,
               )
             }
           }
 
           Text(
-              stringResource(R.string.root_access_request),
-              textAlign = TextAlign.Center,
+            stringResource(R.string.root_access_request),
+            textAlign = TextAlign.Center,
           )
 
           Button(
-              modifier = Modifier.padding(top = 4.dp),
-              enabled = !loadingRootCheck,
-              onClick = {
-                loadingRootCheck = true
-                CoroutineScope(Dispatchers.IO).launch {
-                  val hasRoot = ExecuteAsRoot.hasRoot()
+            modifier = Modifier.padding(top = 4.dp),
+            enabled = !loadingRootCheck,
+            onClick = {
+              loadingRootCheck = true
+              CoroutineScope(Dispatchers.IO).launch {
+                val hasRoot = ExecuteAsRoot.hasRoot()
 
-                  MainScope().launch {
-                    onUpdateRootCheckState(
-                        if (hasRoot) RootCheckState.PASSED else RootCheckState.FAILED,
-                    )
-                    loadingRootCheck = false
-                  }
+                MainScope().launch {
+                  onUpdateRootCheckState(
+                    if (hasRoot) RootCheckState.PASSED else RootCheckState.FAILED,
+                  )
+                  loadingRootCheck = false
                 }
-              },
+              }
+            },
           ) {
             Row {
               if (loadingRootCheck) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(ButtonDefaults.IconSize),
-                    strokeWidth = 2.dp,
+                  modifier = Modifier.size(ButtonDefaults.IconSize),
+                  strokeWidth = 2.dp,
                 )
               } else {
                 Icon(
-                    Icons.Rounded.Security,
-                    contentDescription = null,
-                    modifier = Modifier.size(ButtonDefaults.IconSize),
+                  Icons.Rounded.Security,
+                  contentDescription = null,
+                  modifier = Modifier.size(ButtonDefaults.IconSize),
                 )
               }
               Spacer(Modifier.width(ButtonDefaults.IconSpacing))

@@ -20,13 +20,13 @@ object InferDevice {
     val totalChecks = 2
 
     val device =
-        PixelDevice.getByCodename(codename).let {
-          if (it != PixelDevice.UNKNOWN) {
-            checksPassed++
-          }
-
-          it
+      PixelDevice.getByCodename(codename).let {
+        if (it != PixelDevice.UNKNOWN) {
+          checksPassed++
         }
+
+        it
+      }
 
     if (socManufacturer != "Google") {
       // uh oh, fucky wucky!
@@ -35,13 +35,13 @@ object InferDevice {
     }
 
     val certainty =
-        if (checksPassed >= totalChecks) {
-          HeuristicsCertainty.VERY_LIKELY
-        } else if (checksPassed >= totalChecks / 2) {
-          HeuristicsCertainty.POTENTIALLY
-        } else {
-          HeuristicsCertainty.VERY_UNLIKELY
-        }
+      if (checksPassed >= totalChecks) {
+        HeuristicsCertainty.VERY_LIKELY
+      } else if (checksPassed >= totalChecks / 2) {
+        HeuristicsCertainty.POTENTIALLY
+      } else {
+        HeuristicsCertainty.VERY_UNLIKELY
+      }
 
     return Pair(device, certainty)
   }

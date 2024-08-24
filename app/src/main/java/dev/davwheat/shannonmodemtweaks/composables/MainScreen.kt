@@ -22,8 +22,11 @@ fun MainScreen() {
   val (device, certainty) = InferDevice.getDevice()
 
   Column(
-      modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState()).fillMaxSize(),
-      verticalArrangement = Arrangement.spacedBy(16.dp),
+    modifier = Modifier
+      .padding(16.dp)
+      .verticalScroll(rememberScrollState())
+      .fillMaxSize(),
+    verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     DeviceInfo(device = device, certainty = certainty)
     IsNsgRunningCheck()

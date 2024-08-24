@@ -7,16 +7,17 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class PhyUeTxAntennaSelectionSupport: NvItemTweak(), Parcelable {
+class PhyUeTxAntennaSelectionSupport : NvItemTweak(), Parcelable {
   @IgnoredOnParcel
   override val name = "UE Tx antenna selection"
+
   @IgnoredOnParcel
   override val description =
-      "Select between antenna ports 0 and 1 when it supports multiple Tx antennas"
+    "Select between antenna ports 0 and 1 when it supports multiple Tx antennas"
 
   override val nvItems: List<NvItem>
     get() =
-        listOf(
-            NvItem(id = "UECAPA_PHY_UE_TX_ANTENNASEL_SUPPORT", value = "01"),
-        )
+      listOf(
+        NvItem(id = "UECAPA_PHY_UE_TX_ANTENNASEL_SUPPORT", value = "01"),
+      )
 }
