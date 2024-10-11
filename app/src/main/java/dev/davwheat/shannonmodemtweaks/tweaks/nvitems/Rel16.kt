@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class Rel16: NvItemTweak(), Parcelable {
   @IgnoredOnParcel
-  override val name = "This set uecap release to rel 16"
+  override val name = "Set UE capability release to Rel 16"
   @IgnoredOnParcel
   override val description = "Applies to both NR and LTE"
 

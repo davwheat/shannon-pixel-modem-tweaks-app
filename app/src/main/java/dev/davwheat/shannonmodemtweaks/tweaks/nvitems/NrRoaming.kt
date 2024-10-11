@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class NrRoaming: NvItemTweak(), Parcelable {
   @IgnoredOnParcel
-  override val name = "Enable NSA and SA 5G Roaming"
+  override val name = "Enable 5G NSA and SA when roaming"
   @IgnoredOnParcel
   override val description = "Applies to both SIMs"
 

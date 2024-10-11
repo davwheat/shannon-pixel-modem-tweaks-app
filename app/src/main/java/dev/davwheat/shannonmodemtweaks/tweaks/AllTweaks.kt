@@ -58,15 +58,15 @@ val AllTweaks: Map<String, List<Tweak>> =
     Pair(
       "NR only",
       listOf(
+        NrRoaming(),
+        NrMmwave(),
         NrCsiRsTrsFull50OnAllCcs(),
       )
         .sortedBy { it.name },
     ),
     Pair(
-      "HandyMenny",
+      "Advanced",
       listOf(
-        NrRoaming(),
-        NrMmwave(),
         Segmentation(),
         DisableCapabilitiesFilters(),
         Rel16(),

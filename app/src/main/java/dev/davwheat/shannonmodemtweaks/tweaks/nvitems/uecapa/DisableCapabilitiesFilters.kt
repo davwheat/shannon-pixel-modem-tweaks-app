@@ -21,6 +21,7 @@ class DisableCapabilitiesFilters: NvItemTweak(), Parcelable {
             NvItem(id = "UECAPA_REL13_REQUEST_REDUCED_FORMAT", value = "00"),
             NvItem(id = "UECAPA_REL13_REQUEST_SKIP_FALLBACKCOMB", value = "00"),
             NvItem(id = "UECAPA_REL14_DIFF_FALLBACKCOMB", value = "00"),
+
             NvItem(id = "UECAPA_REL11_FREQ_BAND_RETRIEVAL", index = 1, value = "00"),
             NvItem(id = "UECAPA_REL13_MAXIMUM_CCS_RETRIEVAL", index = 1, value = "00"),
             NvItem(id = "UECAPA_REL13_REQUEST_REDUCED_FORMAT", index = 1, value = "00"),
