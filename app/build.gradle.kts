@@ -6,7 +6,7 @@ import java.util.Date
 import java.util.Properties
 
 val versionMajor = 0
-val versionMinor = 1
+val versionMinor = 2
 val versionPatch = 0
 
 fun getBuildNumber(): Int {
