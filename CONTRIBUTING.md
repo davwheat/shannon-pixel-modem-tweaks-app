@@ -8,7 +8,7 @@ You'll want Android Studio by JetBrains and Google installed on your device to b
 
 Tweaks are designed to be added using a consistent format and technique, while also being very extensible.
 
-All tweaks are found at [`app/sec/main/java/dev/davwheat/shannonmodemtweaks/tweaks`](./app/sec/main/java/dev/davwheat/shannonmodemtweaks/tweaks).
+All tweaks are found at [`app/src/main/java/dev/davwheat/shannonmodemtweaks/tweaks`](./app/src/main/java/dev/davwheat/shannonmodemtweaks/tweaks).
 
 ## Adding nvitem tweaks
 
@@ -120,7 +120,7 @@ If you need to quicky and easily convert to the little-endian byte-separated hex
 
 You should pass an integer to this method to dictate the number of bytes to output in the resultant string.
 
-This is used in the [`AdditionalNrSaLocking`](./app/sec/main/java/dev/davwheat/shannonmodemtweaks/tweaks/nvitems/AdditionalNrSaLocking.kt) tweak [linked below](#all-nvitem-tweak-features).
+This is used in the [`AdditionalNrSaLocking`](./app/src/main/java/dev/davwheat/shannonmodemtweaks/tweaks/nvitems/AdditionalNrSaLocking.kt) tweak [linked below](#all-nvitem-tweak-features).
 
 ```kt
 1.toNvItemHexString(3)        // "01,00,00"
@@ -131,4 +131,4 @@ This is used in the [`AdditionalNrSaLocking`](./app/sec/main/java/dev/davwheat/s
 
 ### All nvitem tweak features
 
-The best example of the available features is found in [AdditionalNrSaLocking.kt](./app/sec/main/java/dev/davwheat/shannonmodemtweaks/tweaks/nvitems/AdditionalNrSaLocking.kt).
+The best example of the available features is found in [AdditionalNrSaLocking.kt](./app/src/main/java/dev/davwheat/shannonmodemtweaks/tweaks/nvitems/AdditionalNrSaLocking.kt).
