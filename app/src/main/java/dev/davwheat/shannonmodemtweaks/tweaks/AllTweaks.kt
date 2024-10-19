@@ -7,6 +7,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrConfigMode
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrMmwave
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrRoaming
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.Rel16
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.Rel17
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.Segmentation
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
@@ -70,6 +71,7 @@ val AllTweaks: Map<String, List<Tweak>> =
         Segmentation(),
         DisableCapabilitiesFilters(),
         Rel16(),
+        Rel17(),
       )
         .sortedBy { it.name },
     )
