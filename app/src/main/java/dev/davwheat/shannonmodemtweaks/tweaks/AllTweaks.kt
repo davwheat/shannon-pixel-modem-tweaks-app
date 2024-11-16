@@ -11,6 +11,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.Rel17
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.Segmentation
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.Rrcinactive
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.DisableCapabilitiesFilters
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrCsiRsTrsFull50OnAllCcs
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
@@ -72,6 +73,7 @@ val AllTweaks: Map<String, List<Tweak>> =
         DisableCapabilitiesFilters(),
         Rel16(),
         Rel17(),
+        Rrcinactive(),
       )
         .sortedBy { it.name },
     )
