@@ -20,5 +20,7 @@ class Segmentation : NvItemTweak(), Parcelable {
             NvItem(id = "!NRCAPA_SEGMENTATION_ALLOWED_DS", value = "01"),
             NvItem(id = "UECAPA_REL16_UL_RRC_SEGMENTATION_SUPPORT", value = "01"),
             NvItem(id = "UECAPA_REL16_UL_RRC_SEGMENTATION_SUPPORT", index = 1, value = "01"),
+            NvItem(id = "!NRRRC_R16_UL_RRC_SEGMENTATION", value = "01"),
+            NvItem(id = "!NRRRC_R16_UL_RRC_SEGMENTATION_DS", value = "01"),
         )
 }
