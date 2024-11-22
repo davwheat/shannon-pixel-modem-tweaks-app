@@ -12,7 +12,7 @@ class CombosOptimization : NvItemTweak(), Parcelable {
   override val name = "NR Combos Optimization"
 
   @IgnoredOnParcel
-  override val description = "Speeds up UE capability generation and compact them"
+  override val description = "Compacted UE capability response; enabled by default on 8+"
 
   override val nvItems: List<NvItem>
     get() =
