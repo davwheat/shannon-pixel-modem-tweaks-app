@@ -12,12 +12,15 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.ims.EvsSwbHighBitrateSuppo
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.Segmentation
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.SrsTxSwitch
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.nrcapa.Rrcinactive
-import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.DisableCapabilitiesFilters
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreMaxCCs
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.NrCsiRsTrsFull50OnAllCcs
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSigSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeTxAntennaSelectionSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.Qam256UploadSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.SetLteFgis
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.DisableReducedFormat
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreRequestedBands
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreSkipFallback
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.rel14.Tbs33bSupport
 
 val AllTweaks: Map<String, List<Tweak>> =
@@ -67,10 +70,19 @@ val AllTweaks: Map<String, List<Tweak>> =
         .sortedBy { it.name },
     ),
     Pair(
+      "LTE Capabilities filters",
+      listOf(
+        IgnoreRequestedBands(),
+        IgnoreMaxCCs(),
+        DisableReducedFormat(),
+        IgnoreSkipFallback(),
+      )
+        .sortedBy { it.name },
+    ),
+    Pair(
       "Advanced",
       listOf(
         Segmentation(),
-        DisableCapabilitiesFilters(),
         Rel16(),
         Rel17(),
         Rrcinactive(),
