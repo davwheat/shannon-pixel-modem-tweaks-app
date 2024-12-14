@@ -17,26 +17,21 @@ class NrCommHpUePc1Dot5SupportedBands : NvItemTweak(), Parcelable {
 
   override val nvItems: List<NvItem>
     get() =
-      listOf(
-        *bands
-          .mapIndexed { index, band ->
-            NvItem(
-              id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS",
-              index = index,
-              value = band.toNvItemHexString(2),
-            ),
-            NvItem(
-              id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS_DS",
-              index = index,
-              value = band.toNvItemHexString(2),
-            )
-          }
-          .toTypedArray(),
-
-        // Bands count
-        NvItem(
-          id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS_NUM",
-          value = bands.size.toNvItemHexString(1),
-        ),
+      bands.flatMapIndexed { index, band ->
+        listOf(
+          NvItem(
+            id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS",
+            index = index,
+            value = band.toNvItemHexString(2)
+          ),
+          NvItem(
+            id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS_DS",
+            index = index,
+            value = band.toNvItemHexString(2)
+          )
+        )
+      } + NvItem(
+        id = "!NRCOMM_PC1DOT5_SUPPORTED_BANDS_NUM",
+        value = bands.size.toNvItemHexString(1)
       )
 }
