@@ -24,6 +24,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.DisableRedu
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreRequestedBands
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreSkipFallback
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.rel14.Tbs33bSupport
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.rel14.volteRecBitRateR14
 
 val AllTweaks: Map<String, List<Tweak>> =
   mapOf(
@@ -52,6 +53,7 @@ val AllTweaks: Map<String, List<Tweak>> =
       "Release 14",
       listOf(
         Tbs33bSupport(),
+        volteRecBitRateR14(),
       )
         .sortedBy { it.name },
     ),
