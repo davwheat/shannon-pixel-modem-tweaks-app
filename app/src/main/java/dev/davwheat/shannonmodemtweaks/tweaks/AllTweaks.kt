@@ -20,6 +20,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeSpecificRefSig
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.PhyUeTxAntennaSelectionSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.Qam256UploadSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.SetLteFgis
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.setUeCat
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.DisableReducedFormat
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreRequestedBands
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.uecapa.filters.IgnoreSkipFallback
@@ -39,6 +40,7 @@ val AllTweaks: Map<String, List<Tweak>> =
         SrsTxSwitch(),
         NrCommHpUePc1Dot5SupportedBands(),
         Qam256UploadSupport(),
+        setUeCat(),
       )
         .sortedBy { it.name },
     ),
