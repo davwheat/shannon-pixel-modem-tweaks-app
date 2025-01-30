@@ -15,5 +15,9 @@ class Tbs33bSupport : NvItemTweak(), Parcelable {
   override val description = "Enable TBS index 33B for 256QAM for ~3% DL performance uplift"
 
   override val nvItems: List<NvItem>
-    get() = listOf(NvItem(id = "UECAPA_REL14_ALTERNATIVE_TBS_INDEX_R14_SUPPORT", value = "01"))
+    get() =
+      listOf(
+        NvItem(id = "UECAPA_REL14_ALTERNATIVE_TBS_INDEX_R14_SUPPORT", value = "01"),
+        NvItem(id = "UECAPA_REL14_ALTERNATIVE_TBS_INDEX_R14_SUPPORT", index = 1, value = "01")
+      )
 }
