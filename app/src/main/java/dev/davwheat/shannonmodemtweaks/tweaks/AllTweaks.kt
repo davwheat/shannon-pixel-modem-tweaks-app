@@ -5,6 +5,7 @@ import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.LteRrcLoggedMeas
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrCommHpUePc1Dot5SupportedBands
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrConfigMode
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrMmwave
+import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrDcSupport
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.NrRoaming
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.Rel16
 import dev.davwheat.shannonmodemtweaks.tweaks.nvitems.Rel17
@@ -71,6 +72,7 @@ val AllTweaks: Map<String, List<Tweak>> =
       listOf(
         NrRoaming(),
         NrMmwave(),
+        NrDcSupport(),
         NrCsiRsTrsFull50OnAllCcs(),
       )
         .sortedBy { it.name },
