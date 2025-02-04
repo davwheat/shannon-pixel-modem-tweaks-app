@@ -64,6 +64,11 @@ class SetLteFgis : NvItemTweak(), Parcelable {
             NvItem(
               id = id,
               value = "01",
+            ),
+            NvItem(
+              id = id,
+              index = 1,
+              value = "01",
             )
           }
           .toTypedArray(),
