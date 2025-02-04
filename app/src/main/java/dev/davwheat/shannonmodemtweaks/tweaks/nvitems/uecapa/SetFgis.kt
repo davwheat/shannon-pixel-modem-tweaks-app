@@ -58,19 +58,17 @@ class SetLteFgis : NvItemTweak(), Parcelable {
 
   override val nvItems: List<NvItem>
     get() =
-      listOf(
-        *items
-          .map { id ->
-            NvItem(
-              id = id,
-              value = "01",
-            ),
-            NvItem(
-              id = id,
-              index = 1,
-              value = "01",
-            )
-          }
-          .toTypedArray(),
-      )
+      items.flatMap { id ->
+        listOf(
+          NvItem(
+            id = id,
+            value = "01",
+          ),
+          NvItem(
+            id = id,
+            index = 1,
+            value = "01",
+          )
+        )
+      }
 }
