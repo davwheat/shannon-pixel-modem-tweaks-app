@@ -27,6 +27,7 @@ class Rrcinactive : NvItemTweak(), Parcelable {
     PixelDevice.PIXEL_9_PRO,
     PixelDevice.PIXEL_9_PRO_FOLD,
     PixelDevice.PIXEL_9_PRO_XL,
+    PixelDevice.PIXEL_9A,
     PixelDevice.PIXEL_10,
     PixelDevice.PIXEL_10_PRO,
     PixelDevice.PIXEL_10_PRO_FOLD,
