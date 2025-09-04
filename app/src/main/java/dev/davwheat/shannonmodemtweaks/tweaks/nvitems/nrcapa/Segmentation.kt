@@ -28,7 +28,11 @@ class Segmentation : NvItemTweak(), Parcelable {
     PixelDevice.PIXEL_9,
     PixelDevice.PIXEL_9_PRO,
     PixelDevice.PIXEL_9_PRO_FOLD,
-    PixelDevice.PIXEL_9_PRO_XL
+    PixelDevice.PIXEL_9_PRO_XL,
+    PixelDevice.PIXEL_10,
+    PixelDevice.PIXEL_10_PRO,
+    PixelDevice.PIXEL_10_PRO_FOLD,
+    PixelDevice.PIXEL_10_PRO_XL
   )
 
   override fun isTweakCompatible(device: PixelDevice): Boolean = device in compatibleDevices
