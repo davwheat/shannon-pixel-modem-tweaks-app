@@ -68,6 +68,7 @@ object InferDevice {
     PIXEL_9_PRO("caiman", "Google Pixel 9 Pro"),
     PIXEL_9_PRO_XL("komodo", "Google Pixel 9 Pro XL"),
     PIXEL_9_PRO_FOLD("comet", "Google Pixel 9 Fold"),
+    PIXEL_9A("tegu", "Google Pixel 9a"),
     PIXEL_10("frankel", "Google Pixel 10"),
     PIXEL_10_PRO("blazer", "Google Pixel 10 Pro"),
     PIXEL_10_PRO_XL("mustang", "Google Pixel 10 Pro XL"),
